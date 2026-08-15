@@ -35,7 +35,13 @@
 
 ## Install
 
-**Option 1: git clone (recommended)**
+**Option 0: dsh plugin add (recommended)**
+
+```bash
+dsh plugin --profile web add github:Asher-2000/dsh-expert-mode
+```
+
+**Option 1: git clone**
 
 ```bash
 mkdir -p ~/.dsh/.agent-presets
