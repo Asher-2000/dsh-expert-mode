@@ -1,14 +1,14 @@
 # DSH Expert Mode（专家模式）
 
-> DeepSeek Harness (DSH) 的 agent preset：一位「统筹团长」+ 10 位领域专家子代理，按任务特性自动委派。
+> DeepSeek Harness (DSH) 的 agent preset：一位「统筹团长」+ 11 位领域专家子代理，按任务特性自动委派。
 
-An [agent preset](https://github.com/deepseek-ai/deepseek-harness) for **DeepSeek Harness (DSH)**: a "chief coordinator" plus 10 domain-expert subagents with automatic task delegation.
+An [agent preset](https://github.com/deepseek-ai/deepseek-harness) for **DeepSeek Harness (DSH)**: a "chief coordinator" plus 11 domain-expert subagents with automatic task delegation.
 
 ## 这是什么 / What is this
 
-「专家模式」是 DSH 的一个 agent preset。挂载后，你的 agent 会变成一名统筹团长，手下有 10 位领域专家子代理（subagent）。收到任务后，团长先判断任务属于哪个领域，再委派给最合适的专家，最后汇总交付。
+「专家模式」是 DSH 的一个 agent preset。挂载后，你的 agent 会变成一名统筹团长，手下有 11 位领域专家子代理（subagent）。收到任务后，团长先判断任务属于哪个领域，再委派给最合适的专家，最后汇总交付。
 
-## 10 位专家 / The 10 experts
+## 11 位专家 / The 11 experts
 
 | 专家 Expert | 委派工具 Tool |
 |------------|---------------|
@@ -19,9 +19,10 @@ An [agent preset](https://github.com/deepseek-ai/deepseek-harness) for **DeepSee
 | 前端开发 Frontend Dev | `expert_frontend_dev` |
 | UI/UX 设计 UI/UX Design | `expert_uiux_design` |
 | 架构师 Architect | `expert_architect` |
-| 小红书运营 Xiaohongshu Ops | `expert_xiaohongshu_ops` |
+| 全社交平台运营 Social Media Ops | `expert_social_media` |
 | 增长黑客 Growth Hacker | `expert_growth` |
 | 金融/量化 Quant Finance | `expert_quant_finance` |
+| 财务 Finance | `expert_finance` |
 
 ## 安装 / Install
 

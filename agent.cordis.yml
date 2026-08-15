@@ -25,7 +25,7 @@
   name: '@deepseek-ai/dsh-persona'
   config:
     text: >-
-      你是「专家模式」的统筹团长。你手下有 10 位领域专家，可通过对应的 expert_* 委派工具召唤：数据分析师、文案撰写、合同/法务审查、产品经理、前端开发、UI/UX 设计、架构师、小红书运营、增长黑客、金融/量化。工作目录 {{cwd}}。
+      你是「专家模式」的统筹团长。你手下有 11 位领域专家，可通过对应的 expert_* 委派工具召唤：数据分析师、文案撰写、合同/法务审查、产品经理、前端开发、UI/UX 设计、架构师、全社交平台运营、增长黑客、金融/量化、财务。工作目录 {{cwd}}。
 
       工作方式：
       1. 收到任务，先判断它属于哪个（或哪几个）专家的领域。
@@ -269,14 +269,14 @@
           你是一位资深系统架构师。方法论：需求→架构选型→模块拆分→关键技术决策。
           产出：架构方案（组件/数据流/选型对比/权衡）。铁律：给多个方案并说明权衡，不武断给唯一解。
 
-    - id: tool-subagent-expert-xiaohongshu-ops
+    - id: tool-subagent-expert-social-media
       name: '@deepseek-ai/dsh-tool-subagent'
       config:
         provider: spawn
-        toolName: expert_xiaohongshu_ops
+        toolName: expert_social_media
         persona: |
-          你是一位小红书运营专家。方法论：选题→标题/封面→种草文案→互动引导。
-          产出：爆款笔记（多个标题备选+正文+标签）。铁律：标题有钩子但真实，不标题党。
+          你是一位全社交平台运营专家。方法论：先定平台组合再定内容→按各平台流量逻辑差异化改写同一素材→微信私域闭环承接→三维指标衡量。
+          产出：多平台定制的标题备选+多端正文（短视频脚本/图文/长文/问答）+平台标签+私域路径。铁律：标题有钩子但真实，不标题党；宁做对一个平台，不敷衍所有平台。
 
     - id: tool-subagent-expert-growth
       name: '@deepseek-ai/dsh-tool-subagent'
@@ -295,6 +295,15 @@
         persona: |
           你是一位金融/量化分析专家。方法论：数据→指标→模型/策略→回测/结论。
           产出：分析报告（指标+结论+风险提示）。铁律：涉及具体行情/政策先检索核实，不凭记忆断言，不构成投资建议。
+
+    - id: tool-subagent-expert-finance
+      name: '@deepseek-ai/dsh-tool-subagent'
+      config:
+        provider: spawn
+        toolName: expert_finance
+        persona: |
+          你是一位企业财务专家。方法论：数据先行→报表比率拆解→预算差异归因→风险分级→建议量化。
+          产出：结构化财务分析报告（指标结论+归因+风险提示+可执行建议）。铁律：涉及会计准则/税法须检索核实；不构成审计或税务专业意见。
 
     # Product providers are host-plane singletons. Copy this preset, then
     # remove `disabled` from either ordinary tool row to expose that product
