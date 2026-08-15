@@ -1,0 +1,28 @@
+{
+  "name": "dsh-expert-mode",
+  "version": "0.1.1",
+  "description": "DSH agent preset: chief coordinator + 11 domain-expert subagents with automatic task delegation (专家模式)",
+  "license": "MIT",
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "agent-preset",
+    "expert-mode",
+    "multi-agent",
+    "subagent",
+    "dsh-plugin"
+  ],
+  "files": [
+    "cordis.patch.yml",
+    "agent.cordis.yml",
+    "preset.yml",
+    "README.md",
+    "README.zh.md",
+    "LICENSE"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}
