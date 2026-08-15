@@ -33,7 +33,13 @@
 
 ## 安装
 
-**方式一：git clone（推荐）**
+**方式零：dsh plugin add（推荐）**
+
+```bash
+dsh plugin --profile web add github:Asher-2000/dsh-expert-mode
+```
+
+**方式一：git clone**
 
 ```bash
 mkdir -p ~/.dsh/.agent-presets
