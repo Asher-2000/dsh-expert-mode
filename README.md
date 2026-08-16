@@ -3,6 +3,7 @@
 > An [agent preset](https://github.com/deepseek-ai/deepseek-harness) for **DeepSeek Harness (DSH)**: a "chief coordinator" plus 11 domain-expert subagents with automatic task delegation.
 
 [![dsh-plugin](https://img.shields.io/badge/dsh--plugin-ready-478CBF?logo=deepseek&logoColor=white)](https://github.com/topics/dsh-plugin)
+[![Featured in Awesome DSH Plugin](https://img.shields.io/badge/awesome--dsh--plugin-featured-1a56db?logo=deepseek&logoColor=white)](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Stars](https://img.shields.io/github/stars/Asher-2000/dsh-expert-mode)](https://github.com/Asher-2000/dsh-expert-mode)
 
@@ -111,6 +112,11 @@ A: Yes. Copy any expert entry from `agent.cordis.yml`, adjust the tool name and 
 
 **Q: Relationship to the official standard preset?**
 A: Built on top of the official standard preset composition, keeping the full toolset and adding an expert-delegation layer.
+
+## Community
+
+- 📢 **Featured in [Awesome DSH Plugin](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin)** — the curated list of DeepSeek Harness plugins.
+- 🏷️ Listed under the [dsh-plugin](https://github.com/topics/dsh-plugin) GitHub topic.
 
 ## Tags
 

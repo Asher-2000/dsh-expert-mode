@@ -3,6 +3,7 @@
 > DeepSeek Harness (DSH) 的 agent preset：一位「首席协调官」+ 11 位领域专家子代理，按任务特性自动委派。
 
 [![dsh-plugin](https://img.shields.io/badge/dsh--plugin-ready-478CBF?logo=deepseek&logoColor=white)](https://github.com/topics/dsh-plugin)
+[![Featured in Awesome DSH Plugin](https://img.shields.io/badge/awesome--dsh--plugin-featured-1a56db?logo=deepseek&logoColor=white)](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Stars](https://img.shields.io/github/stars/Asher-2000/dsh-expert-mode)](https://github.com/Asher-2000/dsh-expert-mode)
 
@@ -107,6 +108,11 @@ A: 可以。复制 `agent.cordis.yml` 中任意 expert 条目，修改工具名�
 
 **Q: 与官方 standard preset 的关系？**
 A: 基于官方 standard preset 组合改造，保留完整工具集，仅增加专家委派层。
+
+## 社区收录
+
+- 📢 入选 **Awesome DSH Plugin 精选列表**（DeepSeek Harness 插件精选仓库）：https://github.com/awesome-dsh-plugin/awesome-dsh-plugin
+- 🏷️ GitHub `dsh-plugin` topic 收录：https://github.com/topics/dsh-plugin
 
 ## Tags / 关键词
 
