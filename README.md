@@ -12,6 +12,18 @@
 
 "Expert Mode" is a DSH agent preset. Once mounted, your agent becomes a **chief coordinator** commanding 11 domain-expert subagents. When a task arrives, the coordinator decides which domain it belongs to, delegates it to the best expert, and consolidates the final delivery.
 
+## Screenshots
+
+![DSH Expert Mode main UI](assets/main-ui.jpg)
+
+*Select "Expert Mode" preset in the DSH workspace*
+
+![Expert-mode run: parallel domain-expert subagents](assets/expert-mode-run.jpg)
+
+*Tasks are automatically delegated to multiple domain-expert subagents in parallel, with real-time token usage and duration*
+
+## 11 位专家 / The 11 experts
+
 **Who is it for**
 - Users who want one agent to cover many professional domains (code + design + finance + legal + operations...)
 - Teams that want an "out-of-the-box" multi-expert workflow without maintaining multiple prompt/tool setups
