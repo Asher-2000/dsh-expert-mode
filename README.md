@@ -60,6 +60,14 @@ mkdir -p ~/.dsh/.agent-presets
 git clone https://github.com/Asher-2000/dsh-expert-mode.git ~/.dsh/.agent-presets/expert-mode
 ```
 
+**Want the English version?** The repo ships an `expert-mode-en/` preset (Chief Coordinator + 11 experts, fully English). After cloning, copy it into your presets directory:
+
+```bash
+cp -r ~/.dsh/.agent-presets/expert-mode/expert-mode-en ~/.dsh/.agent-presets/expert-mode-en
+```
+
+Then pick **"Expert Mode"** (English) or **「专家模式」** (Chinese) in the DSH preset picker.
+
 **Option 2: manual download**
 
 Download the latest release from [Releases](https://github.com/Asher-2000/dsh-expert-mode/releases), then place `preset.yml` + `agent.cordis.yml` into `~/.dsh/.agent-presets/expert-mode/`.

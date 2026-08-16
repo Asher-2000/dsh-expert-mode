@@ -1,0 +1,2 @@
+name: Expert Mode
+description: A "Chief Coordinator" plus 11 domain-expert subagents (data analysis, copywriting, legal review, product, frontend, UI/UX, architecture, social media ops, growth hacking, quant finance, finance). Automatically delegates each task to the best-fit expert.
