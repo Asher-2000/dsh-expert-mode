@@ -1,0 +1,71 @@
+{
+  "project": "专家模式Pro功能测试",
+  "created": "2026-08-18T15:52:00Z",
+  "tasks": [
+    {
+      "id": "t1",
+      "name": "测试数据分析专家委派",
+      "assignee": "expert_data_analyst",
+      "status": "completed",
+      "dependencies": [],
+      "output_ref": "数据分析专家返回的文件类型分布分析报告"
+    },
+    {
+      "id": "t2",
+      "name": "测试文案撰写专家委派",
+      "assignee": "expert_copywriter",
+      "status": "completed",
+      "dependencies": ["t1"],
+      "output_ref": "文案专家返回的4个差异化版本文案"
+    },
+    {
+      "id": "t3",
+      "name": "测试前端开发专家委派",
+      "assignee": "expert_frontend_dev",
+      "status": "completed",
+      "dependencies": ["t2"],
+      "output_ref": "前端专家设计的数据分析报告展示组件"
+    },
+    {
+      "id": "t4",
+      "name": "测试架构师专家委派",
+      "assignee": "expert_architect",
+      "status": "completed",
+      "dependencies": ["t3"],
+      "output_ref": "架构师提供的技术风险评估报告"
+    },
+    {
+      "id": "t5",
+      "name": "测试交叉评审协议",
+      "assignee": "expert_frontend_dev",
+      "status": "completed",
+      "dependencies": ["t4"],
+      "output_ref": "前端专家对架构师评估的交叉评审意见"
+    },
+    {
+      "id": "t6",
+      "name": "保存交叉评审记录",
+      "assignee": "协调官",
+      "status": "completed",
+      "dependencies": ["t5"],
+      "output_ref": ".expert-mode/reviews/2026-08-18-data-report-component-review.md"
+    },
+    {
+      "id": "t7",
+      "name": "测试经验沉淀协议",
+      "assignee": "协调官",
+      "status": "completed",
+      "dependencies": ["t6"],
+      "output_ref": ".expert-mode/experts/*/lessons.md"
+    }
+  ],
+  "completed_tasks": 7,
+  "total_tasks": 7,
+  "progress": "100%",
+  "next_actions": [
+    "验证专家持久化功能",
+    "测试专家间直接通信",
+    "测试Token预算控制",
+    "测试渐进式披露"
+  ]
+}
