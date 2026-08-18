@@ -1,0 +1,40 @@
+{
+  "name": "@local/dsh-expert-mode-pro-ui",
+  "version": "2.0.0",
+  "description": "Expert Mode Pro Web UI Management Panel - Task Management, Expert Monitoring, Cross Review, Experience Pool (i18n: 中文/English)",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./i18n": "./lib/i18n.js",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [],
+      "platform": "web"
+    }
+  },
+  "keywords": [
+    "dsh-plugin",
+    "expert-mode",
+    "multi-agent",
+    "i18n",
+    "internationalization",
+    "中文",
+    "english"
+  ],
+  "author": "Asher-2000",
+  "license": "MIT",
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "DESIGN.md",
+    "README.md",
+    "README.zh.md"
+  ]
+}
