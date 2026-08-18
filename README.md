@@ -91,6 +91,31 @@ dsh --profile headless "Analyze this data and give recommendations" --preset exp
 
 When delegating, state the goal, inputs, and expected output clearly so the expert subagent works independently; when consolidating, keep the expert's conclusions and data evidence intact without rewriting.
 
+### Three-Anchor Constraint (new in v0.3.0)
+
+The chief coordinator performs a mandatory self-check every turn with three anchors to prevent drift and inefficient loops:
+
+| Anchor | When | Purpose |
+|--------|------|---------|
+| **Recall** | Before each turn | One-sentence recap: current sub-task + what the last step produced |
+| **Convergence** | After each turn | Confirm this step advanced the overall goal; if not, pivot immediately |
+| **Anti-drift** | After 2 consecutive stale turns | Force a strategy change: swap expert, decompose the sub-task, or ask the user |
+
+### Near-distance Guidance (new in v0.3.0)
+
+Each expert subagent's persona includes a guidance template. The coordinator fills in concrete values at delegation time:
+
+```
+── Near-distance Guidance ──
+Identity: You are a [expert role].
+Task: {specific task description}
+Input: {input data}
+Output format: [this expert's delivery format]
+Completion criterion: [what "done" looks like]
+```
+
+This ensures every subagent starts with crystal-clear identity, task, and output expectations — significantly improving routing accuracy and output quality.
+
 ## Files
 
 ```
