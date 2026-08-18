@@ -3,12 +3,14 @@
  * 集成任务管理、专家监控、交叉评审、经验沉淀四大模块
  *
  * 纯JavaScript实现，零依赖，响应式设计，暗色模式支持
+ * 支持中英文国际化
  */
 
 import { createTaskManager } from './modules/task-manager.js';
 import { createExpertMonitor } from './modules/expert-monitor.js';
 import { createReviewVisualization } from './modules/review-visualization.js';
 import { createExperienceViewer } from './modules/experience-viewer.js';
+import { t, getLang, setLang } from './i18n.js';
 
 // ── CSS 注入 ──────────────────────────────────────────────────────
 const CSS_URL = new URL('./styles/main.css', import.meta.url).href;
@@ -83,10 +85,10 @@ function createToast() {
 
 // ── 主面板 UI ─────────────────────────────────────────────────────
 const TABS = [
-  { id: 'tasks', label: '任务管理', icon: '📋' },
-  { id: 'experts', label: '专家监控', icon: '👥' },
-  { id: 'reviews', label: '交叉评审', icon: '🔍' },
-  { id: 'experience', label: '经验沉淀', icon: '💡' }
+  { id: 'tasks', labelKey: 'tabs.tasks', icon: '📋' },
+  { id: 'experts', labelKey: 'tabs.experts', icon: '👥' },
+  { id: 'reviews', labelKey: 'tabs.reviews', icon: '🔍' },
+  { id: 'experience', labelKey: 'tabs.experience', icon: '💡' }
 ];
 
 let activeTab = 'tasks';
@@ -114,7 +116,7 @@ function createMainPanel(storage, toast) {
   const fab = document.createElement('button');
   fab.className = 'emp-fab';
   fab.innerHTML = '🎯';
-  fab.title = 'Expert Mode Pro';
+  fab.title = t('appTitle');
   fab.style.cssText = `
     position: fixed;
     bottom: 24px;
@@ -183,19 +185,24 @@ function createMainPanel(storage, toast) {
   }
 
   function renderPanel() {
+    const currentLang = getLang();
+    const langLabel = currentLang === 'zh' ? 'EN' : '中';
+    const langTitle = currentLang === 'zh' ? 'Switch to English' : '切换到中文';
+    
     panelElement.innerHTML = `
       <div class="emp-panel-header">
-        <h2 class="emp-panel-title">🎯 Expert Mode Pro</h2>
+        <h2 class="emp-panel-title">🎯 ${t('appTitle')}</h2>
         <div class="emp-panel-actions">
-          <button class="emp-btn-icon" data-action="toggle-theme" title="切换主题">🌓</button>
-          <button class="emp-btn-icon" data-action="refresh" title="刷新">🔄</button>
-          <button class="emp-btn-icon" data-action="close-panel" title="关闭">✕</button>
+          <button class="emp-btn-icon emp-lang-switch" data-action="toggle-lang" title="${langTitle}">${langLabel}</button>
+          <button class="emp-btn-icon" data-action="toggle-theme" title="🌓">🌓</button>
+          <button class="emp-btn-icon" data-action="refresh" title="🔄">🔄</button>
+          <button class="emp-btn-icon" data-action="close-panel" title="✕">✕</button>
         </div>
       </div>
       <div class="emp-tabs">
         ${TABS.map(tab => `
           <button class="emp-tab ${activeTab === tab.id ? 'emp-tab-active' : ''}" data-tab="${tab.id}">
-            ${tab.icon} ${tab.label}
+            ${tab.icon} ${t(tab.labelKey)}
           </button>
         `).join('')}
       </div>
@@ -209,6 +216,19 @@ function createMainPanel(storage, toast) {
     panelElement.querySelector('[data-action="refresh"]')?.addEventListener('click', () => renderPanel());
     panelElement.querySelector('[data-action="toggle-theme"]')?.addEventListener('click', () => {
       document.documentElement.classList.toggle('emp-dark-mode');
+    });
+    
+    // 语言切换
+    panelElement.querySelector('[data-action="toggle-lang"]')?.addEventListener('click', () => {
+      const newLang = getLang() === 'zh' ? 'en' : 'zh';
+      setLang(newLang);
+      toast.show(t('messages.languageChanged'), 'success');
+      renderPanel();
+      // 重新渲染当前标签页内容
+      const contentEl = panelElement.querySelector('#emp-tab-content');
+      if (contentEl && modules[activeTab]) {
+        modules[activeTab].render(contentEl);
+      }
     });
 
     panelElement.querySelectorAll('[data-tab]').forEach(tab => {
