@@ -1,212 +1,192 @@
-# 🎯 Expert Mode Pro
+# DSH Expert Mode
 
-> **DeepSeek Harness Expert Mode Pro** — Intelligent Collaboration System with Chief Coordinator + 11 Domain Experts
+> DeepSeek Harness (DSH) agent preset: a Chief Coordinator + 11 domain expert subagents that auto-delegate by task type.
 
-[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/Asher-2000/dsh-expert-mode)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![DSH Plugin](https://img.shields.io/badge/dsh--plugin-ready-478CBF?logo=deepseek&logoColor=white)](https://github.com/topics/dsh-plugin)
+[![dsh-plugin](https://img.shields.io/badge/dsh--plugin-ready-478CBF?logo=deepseek&logoColor=white)](https://github.com/topics/dsh-plugin)
+[![Featured in Awesome DSH Plugin](https://img.shields.io/badge/awesome--dsh--plugin-featured-1a56db?logo=deepseek&logoColor=white)](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Stars](https://img.shields.io/github/stars/Asher-2000/dsh-expert-mode)](https://github.com/Asher-2000/dsh-expert-mode)
 
 [中文版](README.zh.md) | **English**
 
 ---
 
-## ✨ New Features
+## What is this
 
-### 🚀 Phase 0: Expert Persistence
+"Expert Mode" is a DSH agent preset. Once mounted, your agent becomes a Chief Coordinator with 11 domain expert subagents. When a task arrives, the Coordinator identifies the domain, delegates to the best expert, and delivers a consolidated result.
 
-**Before**: Each delegation spawns a new subagent, destroyed after completion  
-**Now**: Experts can be awakened for follow-up conversations with full context preserved
+## Demo
 
-```javascript
-// Expert stays online after task completion
-// Coordinator can wake up expert for additional modifications
-send_message(expert_id, "Please add file size statistics")
-```
+![DSH Expert Mode main interface](assets/main-ui.jpg)
 
-**Benefits**:
-- ✅ Experts **stay online** after task completion
-- ✅ Coordinator can **wake up experts** for modifications with full context
-- ✅ Backward compatible, no impact on existing delegation logic
+*Select the "Expert Mode" preset in DSH workspace to use*
 
----
+![Expert Mode running: parallel multi-expert subagents](assets/expert-mode-run.jpg)
 
-### ⚡ Phase 1: Progressive Disclosure
+*Tasks auto-delegated to multiple expert subagents in parallel, with real-time token usage and timing*
 
-**Before**: All 11 expert personas injected at once (~3230 chars)  
-**Now**: Coordinator holds only index, injects on demand (~930 chars)
-
-```
-Before: 3230 chars → After: 930 chars
-Token savings: 71%  Response speed: +20%
-```
-
-**Mechanism**:
-- **Index Layer**: Coordinator holds only expert index (~700 chars)
-- **On-demand Injection**: Expert persona injected during delegation (~230 chars)
-- **Context Isolation**: Expert tasks don't affect coordinator reasoning
+**Who is this for**
+- Users who want one agent covering multiple domains (code + design + finance + legal + operations...)
+- Teams that want an out-of-the-box multi-expert workflow without maintaining separate prompts
+- Developers interested in DSH subagent mechanisms
 
 ---
 
-### 🧠 Phase 1: Anchored No-Degradation
+## 11 Experts
 
-**Problem**: System prompt mutation from 46 to 6620 chars triggers "trajectory flip"  
-**Solution**: Progressive disclosure + Context isolation
-
-**Verification Results**:
-- ✅ Reasoning style stability: 9/10
-- ✅ Output quality maintenance: 9/10
-- ✅ Prompt mutation avoidance: 100%
-
----
-
-
-| Dimension | Original Expert Mode | Expert Mode Pro |
-|-----------|---------------------|-----------------|
-| **Expert Persistence** | ❌ Destroyed after use | ✅ Can be awakened |
-| **Expert Communication** | ❌ All via coordinator | ✅ Direct routing |
-| **Task Dependencies** | ❌ Manual judgment | ✅ DAG auto-scheduling |
-| **State Persistence** | ❌ Lost on session change | ✅ File persistence |
-| **Self-Constraint** | Three Anchors | Five Anchors (+collaboration +resource awareness) |
-| **Context Efficiency** | Full injection | Progressive disclosure + token budget |
-| **Intelligence Stability** | Prompt mutation may degrade | Anchored no-degradation |
-| **High-risk Decisions** | Single expert | Cross review |
-| **Experience Accumulation** | None | Experts learn over time |
-| **Professional Depth** | ✅ Persona + Iron Rules | ✅ Maintained |
-| **Near-distance Guidance** | ✅ Template system | ✅ Maintained |
-| **Backward Compatibility** | — | ✅ 100% |
+| Expert | Tool | Domain |
+|--------|------|--------|
+| Data Analyst | `expert_data_analyst` | Data processing, statistics, visualization |
+| Copywriter | `expert_copywriter` | Marketing copy, content creation |
+| Legal Review | `expert_legal_review` | Contract terms, legal risk |
+| Product Manager | `expert_product_manager` | Requirements analysis, product planning |
+| Frontend Dev | `expert_frontend_dev` | Web frontend implementation |
+| UI/UX Design | `expert_uiux_design` | Interface design, interaction |
+| Architect | `expert_architect` | System design, tech selection |
+| Social Media | `expert_social_media` | Multi-platform content distribution |
+| Growth Hacker | `expert_growth` | Growth strategy, conversion optimization |
+| Quant Finance | `expert_quant_finance` | Quantitative models, financial analysis |
+| Finance | `expert_finance` | Financial analysis, reporting |
 
 ---
 
-## 🚀 Quick Start
+## Installation
 
-### Installation
+**Method 0: dsh plugin add (recommended)**
 
 ```bash
-# 1. Clone repository
-git clone https://github.com/Asher-2000/dsh-expert-mode.git
-cd dsh-expert-mode
-
-# 2. Copy plugin to DSH plugin directory
-dsh web
+dsh plugin --profile web add github:Asher-2000/dsh-expert-mode
 ```
 
-### Usage
+**Method 1: git clone**
 
-1. After starting DSH Web service, click the 🎯 floating button in the bottom right corner
-3. Start using task management, expert monitoring, cross review, experience pool features
+```bash
+mkdir -p ~/.dsh/.agent-presets
+git clone https://github.com/Asher-2000/dsh-expert-mode.git ~/.dsh/.agent-presets/expert-mode
+```
+
+**Want English?** The repo includes an `expert-mode-en/` preset (Chief Coordinator + 11 experts, fully English):
+
+```bash
+cp -r ~/.dsh/.agent-presets/expert-mode/expert-mode-en ~/.dsh/.agent-presets/expert-mode-en
+```
+
+Then select **"Expert Mode"** (English) or **「专家模式」** (Chinese) in the DSH preset selector.
+
+**Method 2: Manual download**
+
+Download from [Releases](https://github.com/Asher-2000/dsh-expert-mode/releases) and place `preset.yml` + `agent.cordis.yml` into `~/.dsh/.agent-presets/expert-mode/`.
 
 ---
 
-## 📋 Expert Team
+## Usage
 
-| Expert | Role | Methodology |
-|--------|------|-------------|
-| 📊 Data Analyst | Business → Metrics → Anomalies → Conclusions | Ask business questions → Break down metrics → Find anomalies → Give conclusions |
-| ✍️ Copywriter | Persona → Selling Points → Multi-version Copy | Define user persona and selling points → Generate multi-version different style copy |
-| ⚖️ Legal Review | Elements → Risks → Modification Suggestions | List elements → Mark risk points → Give modification suggestions |
-| 📋 Product Manager | Requirements → User Stories → PRD | Requirements clarification → User stories → PRD framework → Feature prioritization |
-| 💻 Frontend Dev | Selection → Components → Performance Optimization | Tech selection → Component design → Performance optimization |
-| 🎨 UI/UX Design | Flow → Architecture → Visual Specs | User flow → Information architecture → Visual specs → Delivery |
-| 🏗️ Architect | Requirements → Selection → Modules → Decisions | Requirements → Architecture selection → Module breakdown → Key technical decisions |
-| 📱 Social Media | Platforms → Content Differentiation → Private Domain | Define platform mix → Differentiate content by platform traffic logic |
-| 📈 Growth Hacker | Funnel → Levers → Experiments | Funnel breakdown → Find growth levers → Design experiments → Data validation |
-| 💹 Quant Finance | Data → Metrics → Models → Backtesting | Data → Metrics → Models/strategies → Backtesting/conclusions |
-| 💰 Finance | Reports → Breakdown → Budget → Suggestions | Data first → Report ratio breakdown → Budget variance attribution → Quantified suggestions |
+After installation, select the Expert Mode preset when creating a new session in DSH Web GUI; or via CLI:
+
+```bash
+dsh --profile headless "Analyze this data and give recommendations" --preset expert-mode
+```
 
 ---
 
-## 🔧 Core Mechanisms
+## How it works
 
-### Five Anchor Constraints
+1. Receives a task, identifies which expert domain(s) it belongs to.
+2. Domain match → delegates to the best expert subagent (complex tasks can run multiple experts in parallel), then consolidates.
+3. Simple general tasks (Q&A, file ops, chat) → Chief Coordinator handles directly, no forced delegation.
 
-```yaml
-【Anchor 1·Review】Before this round: Current subtask? Previous output?
-【Anchor 2·Convergence】Before this round ends: Does output advance overall goal?
-【Anchor 3·Anti-drift】No progress for 2 rounds → Force strategy switch
-【Anchor 4·Collaboration Check】Cross-expert collaboration needed? Correct routing?
-【Anchor 5·Resource Awareness】Context token usage healthy? Need simplification?
+Delegation passes clear objectives, inputs, and expected outputs. Consolidation preserves expert conclusions and data evidence without rewriting.
+
+---
+
+## Core mechanisms
+
+### Five Anchor Constraints (v0.3.0)
+
+The Chief Coordinator self-checks five anchor points every turn to prevent drift and inefficient loops:
+
+| Anchor | Timing | Purpose |
+|--------|--------|---------|
+| **Review** | Before each turn | One-sentence recap of current subtask and previous output |
+| **Convergence** | Before each turn ends | Confirm this step advanced the overall goal; if not, stop immediately |
+| **Anti-drift** | After 2 turns with no progress | Force strategy switch: change expert, split subtask, or ask user |
+| **Collaboration Check** | Before delegation | Check if cross-expert collaboration is needed and routing is correct |
+| **Resource Awareness** | Throughout | Monitor context token usage; proactively simplify if >70% |
+
+### Near-distance Guidance (v0.3.0)
+
+Each expert subagent persona includes a built-in guidance template. The Coordinator fills in specifics during delegation:
+
 ```
+── Near-distance Guidance ──
+Identity: You are [expert role]
+Task: {specific task description}
+Input: {input data}
+Output format: [this expert's delivery format]
+Completion criteria: [what counts as done]
+```
+
+This lets subagents start with clear "who I am, what to do, how to deliver" — significantly improving routing accuracy and output quality.
+
+### Expert Persistence (v0.3.0)
+
+Experts stay online after task completion. The Coordinator can wake them up for follow-up modifications with full context preserved.
 
 ### Expert Communication Protocol
 
-```yaml
+When cross-expert collaboration is needed, the Coordinator routes structured messages:
+
+```
 [FROM:expert_data_analyst → TO:expert_frontend_dev]
 Task: Design frontend data display component based on analysis conclusions
 Data: {Expert A's conclusion summary}
 ```
 
-### Cross Review Protocol
+### Cross Review
 
-```yaml
-Trigger Conditions:
-- High-risk tasks (architecture selection, contract review, financial analysis)
-- User requests "multi-angle verification"
-- Expert output has low confidence
+High-risk tasks (architecture selection, contract review, financial analysis) trigger multi-expert independent review. The Coordinator synthesizes conclusions.
 
-Execution Flow:
-1. Assign to 2-3 related experts for independent output
-2. Each expert's output becomes review input for others
-3. Reviewers mark "Agree/Partially Agree/Disagree + Reason"
-4. Coordinator as judge, synthesize final conclusion
-5. Review records saved to .expert-mode/reviews/ directory
+### Experience Pool
+
+After completing important tasks, experts extract lessons to `.expert-mode/experts/{name}/lessons.md`, automatically injected for similar future tasks.
+
+---
+
+## File structure
+
 ```
-
-### Experience Pool Protocol
-
-```yaml
-After expert completes important task:
-1. Extract "what was learned" (max 3 items)
-2. Write to .expert-mode/experts/{name}/lessons.md
-3. Next similar task, lessons.md injected as additional context
+.
+├── preset.yml          # Preset metadata (name + description)
+├── agent.cordis.yml    # Cordis composition: Coordinator persona + 11 expert subagent tools
+├── README.md
+├── README.zh.md
+└── LICENSE
 ```
 
 ---
 
-## 📁 Project Structure
+## FAQ
 
-```
-dsh-expert-mode/
-├── README.md                              # English version
-├── README.zh.md                           # Chinese version
-├── expert-mode-pro-plan.md                # Upgrade plan
-├── .expert-mode/                          # Runtime state
-│   ├── experts/                           # Expert experience pool
-│   │   ├── data-analyst/
-│   │   │   └── lessons.md
-│   │   ├── frontend-dev/
-│   │   │   └── lessons.md
-│   │   └── architect/
-│   │       └── lessons.md
-│   ├── reviews/                           # Cross review records
-│   │   └── 2026-08-18-*.md
-│   ├── team-state.json                    # Task DAG state
-│   ├── optimized-persona.md               # Progressive disclosure optimization
-│   ├── anchored-no-degradation-experiment.md  # Anchored no-degradation experiment
-│   └── test-progressive-disclosure.md     # Progressive disclosure test
+**Q: Does Expert Mode consume extra model quota?**
+A: Delegating to expert subagents triggers subagent model calls (DSH subagent mechanism), same as the official subagent feature. Simple tasks are handled directly by the Coordinator with no extra calls.
 
-1. Fork this repository
-2. Create feature branch: `git checkout -b feature/your-feature`
-3. Commit changes: `git commit -m 'Add some feature'`
-4. Push branch: `git push origin feature/your-feature`
-5. Submit Pull Request
+**Q: Can I add my own experts?**
+A: Yes. Copy any expert entry in `agent.cordis.yml`, modify the tool name and persona.
+
+**Q: How does it relate to the official standard preset?**
+A: Built on top of the official standard preset combination, preserving the full toolset and only adding the expert delegation layer.
 
 ---
 
-## 📄 License
+## Community
 
-MIT License - See [LICENSE](LICENSE) for details
+- 📢 Featured in **Awesome DSH Plugin**: https://github.com/awesome-dsh-plugin/awesome-dsh-plugin
+- 🏷️ GitHub `dsh-plugin` topic: https://github.com/topics/dsh-plugin
 
----
+## Tags
 
-## 🙏 Acknowledgments
+`dsh` `deepseek-harness` `agent-preset` `expert-mode` `multi-agent` `subagent` `ai-agent` `dsh-plugin`
 
-- [DeepSeek Harness](https://github.com/deepseek-ai/dsh) - Core framework
-- [dsh-anchored-flash](https://github.com/deepseek-ai/dsh-anchored-flash) - Anchored no-degradation mechanism
-- [dsh-ai-solution-council](https://github.com/deepseek-ai/dsh-ai-solution-council) - Cross review pattern
-- [dsh-memory-evolve](https://github.com/deepseek-ai/dsh-memory-evolve) - Experience pool mechanism
+## License
 
----
-
-**Version**: 2.0.0  
-**Last Updated**: 2026-08-18  
-**Author**: Asher-2000
+MIT License — see [LICENSE](LICENSE).
