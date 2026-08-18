@@ -1,6 +1,0 @@
-# Expert Mode Pro UI - cordis.patch.yml
-# DSH UI Plugin for Expert Mode Pro management panel
-
-- insert:
-    - id: dsh-expert-mode-pro-ui
-      name: '@local/dsh-expert-mode-pro-ui'

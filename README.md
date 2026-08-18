@@ -59,20 +59,6 @@ Token savings: 71%  Response speed: +20%
 
 ---
 
-### 🌐 Phase 8: Web UI Management Panel
-
-**Four Major Modules**:
-
-| Module | Function | Highlights |
-|--------|----------|------------|
-| **Task Management** | Three views (List/Kanban/DAG) | Dependency management, priority settings |
-| **Expert Monitoring** | Real-time 11-expert status | Wake-up follow-up, history statistics |
-| **Cross Review** | Multi-expert independent review | Opinion comparison, visualization |
-| **Experience Pool** | Expert knowledge base | Search, categorize, export |
-
----
-
-## 📊 Feature Comparison
 
 | Dimension | Original Expert Mode | Expert Mode Pro |
 |-----------|---------------------|-----------------|
@@ -85,7 +71,6 @@ Token savings: 71%  Response speed: +20%
 | **Intelligence Stability** | Prompt mutation may degrade | Anchored no-degradation |
 | **High-risk Decisions** | Single expert | Cross review |
 | **Experience Accumulation** | None | Experts learn over time |
-| **Visualization** | ❌ Plain text | ✅ Web UI Panel |
 | **Professional Depth** | ✅ Persona + Iron Rules | ✅ Maintained |
 | **Near-distance Guidance** | ✅ Template system | ✅ Maintained |
 | **Backward Compatibility** | — | ✅ 100% |
@@ -102,23 +87,12 @@ git clone https://github.com/Asher-2000/dsh-expert-mode.git
 cd dsh-expert-mode
 
 # 2. Copy plugin to DSH plugin directory
-cp -r dsh-ui-plugins/dsh-expert-mode-pro-ui ~/.dsh/plugins/
-
-# 3. Configure cordis.patch.yml
-cat >> ~/.dsh/cordis.patch.yml << 'EOF'
-- insert:
-    - id: expert-mode-pro-ui
-      name: "@local/dsh-expert-mode-pro-ui"
-EOF
-
-# 4. Restart DSH Web service
 dsh web
 ```
 
 ### Usage
 
 1. After starting DSH Web service, click the 🎯 floating button in the bottom right corner
-2. Click to open Expert Mode Pro management panel
 3. Start using task management, expert monitoring, cross review, experience pool features
 
 ---
@@ -209,112 +183,6 @@ dsh-expert-mode/
 │   ├── optimized-persona.md               # Progressive disclosure optimization
 │   ├── anchored-no-degradation-experiment.md  # Anchored no-degradation experiment
 │   └── test-progressive-disclosure.md     # Progressive disclosure test
-├── dsh-ui-plugins/
-│   └── dsh-expert-mode-pro-ui/            # Web UI plugin
-│       ├── package.json
-│       ├── cordis.patch.yml
-│       ├── DESIGN.md
-│       ├── README.md                      # Plugin README (EN)
-│       ├── README.zh.md                   # Plugin README (ZH)
-│       ├── demo.html
-│       └── lib/
-│           ├── index.js
-│           ├── client.js
-│           ├── i18n.js                  # Internationalization
-│           ├── modules/
-│           │   ├── task-manager.js
-│           │   ├── expert-monitor.js
-│           │   ├── review-visualization.js
-│           │   └── experience-viewer.js
-│           └── styles/
-│               └── main.css
-└── .gitignore
-```
-
----
-
-## 🎨 Interface Features
-
-### Dark Mode
-- Auto-detect system dark mode preference
-- Click 🌓 button to manually toggle
-- All components fully support dark mode
-
-### Responsive Design
-- **Desktop** (> 1024px): Three-column Kanban layout
-- **Tablet** (641px - 1024px): Single column layout
-- **Mobile** (≤ 640px): Full-screen panel
-
-### Animation Effects
-- Panel open/close: Scale + fade in/out
-- Card hover: Lift + shadow enhancement
-- Status indicator: Pulse animation (busy state)
-- Toast notifications: Slide in/out
-
-### 🌐 Internationalization (i18n)
-- **Bilingual Support**: Chinese (中文) and English
-- **One-click Switch**: Click EN/中 button in panel header
-- **Language Persistence**: Preference saved to localStorage
-- **Full Translation**: All UI text, buttons, labels, messages
-
----
-
-## 🔧 Technical Specifications
-
-- **Implementation**: Pure JavaScript (ES Modules)
-- **External Dependencies**: Zero
-- **CSS Solution**: Pure CSS + Custom Properties
-- **Browser Compatibility**: Chrome 80+, Firefox 78+, Safari 14+, Edge 80+
-- **Bundle Size**: < 50KB (including CSS)
-
----
-
-## 📈 Performance Metrics
-
-| Metric | Before | After | Improvement |
-|--------|--------|-------|-------------|
-| **Initial Token Consumption** | ~3230 chars | ~930 chars | -71% |
-| **Response Time (Simple Task)** | ~5s | ~4s | +20% |
-| **Response Time (Complex Task)** | ~15s | ~12s | +20% |
-| **Expert Output Quality** | 9/10 | 9/10 | Maintained |
-| **User Experience** | Average | Excellent | Significantly Improved |
-
----
-
-## 🛠️ Development
-
-### Adding New Expert
-
-1. Add expert configuration in `agent.cordis.yml`:
-```yaml
-- id: tool-subagent-expert-your-expert
-  name: '@deepseek-ai/dsh-tool-subagent'
-  config:
-    provider: spawn
-    toolName: expert_your_expert
-    backgroundMode: continuable
-    persona: |
-      You are a senior expert. Methodology: ...
-```
-
-2. Add expert info in `expert-monitor.js`:
-```javascript
-const EXPERTS = [
-  { id: 'your_expert', name: 'Custom Expert', role: 'Role description', icon: '🔧', color: '#3b82f6' },
-  // ...
-];
-```
-
-### Adding New Module
-
-1. Create new module file in `lib/modules/`
-2. Implement `create*()` factory function, returning `{ render, ...methods }` object
-3. Import and register in `modules` object in `client.js`
-4. Add new tab configuration in `TABS` array
-
----
-
-## 📝 Contributing
 
 1. Fork this repository
 2. Create feature branch: `git checkout -b feature/your-feature`
