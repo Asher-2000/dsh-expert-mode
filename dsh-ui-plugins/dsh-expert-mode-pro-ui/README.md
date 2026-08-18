@@ -1,21 +1,23 @@
 # Expert Mode Pro UI
 
-> DSH Expert Mode Pro Web UI 管理面板 — 任务管理、专家监控、交叉评审可视化、经验沉淀查看
+> DSH Expert Mode Pro Web UI Management Panel — Task Management, Expert Monitoring, Cross Review Visualization, Experience Pool
 
-## 🚀 快速开始
+[中文版](README.zh.md) | **English**
 
-### 安装
+## 🚀 Quick Start
 
-将插件目录放置在 DSH 插件路径下：
+### Installation
+
+Copy the plugin directory to DSH plugin path:
 
 ```bash
-# 复制插件到 DSH 插件目录
+# Copy plugin to DSH plugin directory
 cp -r dsh-expert-mode-pro-ui /path/to/dsh-plugins/
 ```
 
-### 配置
+### Configuration
 
-在 DSH 的 `cordis.patch.yml` 中添加插件引用：
+Add plugin reference in DSH's `cordis.patch.yml`:
 
 ```yaml
 - insert:
@@ -23,209 +25,210 @@ cp -r dsh-expert-mode-pro-ui /path/to/dsh-plugins/
       name: "@local/dsh-expert-mode-pro-ui"
 ```
 
-### 启动
+### Launch
 
-启动 DSH Web 服务后，页面右下角会出现 🎯 浮动按钮，点击即可打开管理面板。
-
----
-
-## 📋 功能模块
-
-### 1. 任务管理
-
-管理专家团队的任务分配和执行状态。
-
-**功能：**
-
-- **三种视图**：列表视图、看板视图、DAG 视图
-- **任务创建**：填写任务名称、描述、优先级
-- **任务分配**：将任务分配给指定专家
-- **依赖管理**：设置任务依赖关系，系统自动检查前置条件
-- **状态流转**：待处理 → 进行中 → 已完成
-
-**操作：**
-
-1. 点击「+ 新建任务」创建新任务
-2. 在任务卡片上点击「编辑」修改任务
-3. 点击「开始」将待处理任务转为进行中
-4. 点击「完成」标记任务为已完成
-5. 切换到「看板」视图查看任务状态分布
-6. 切换到「DAG」视图查看任务依赖关系
-
-### 2. 专家监控
-
-实时监控 11 位专家的工作状态。
-
-**专家列表：**
-
-| 专家 | 角色 | 图标 |
-|------|------|------|
-| 数据分析师 | 先问业务→拆指标→找异常→给结论 | 📊 |
-| 文案撰写 | 先定画像→产多版本→差异化 | ✍️ |
-| 合同/法务 | 先列要件→标风险→给修改建议 | ⚖️ |
-| 产品经理 | 需求澄清→用户故事→PRD→优先级 | 📋 |
-| 前端开发 | 技术选型→组件设计→性能优化 | 💻 |
-| UI/UX设计 | 用户流程→信息架构→视觉规范 | 🎨 |
-| 架构师 | 需求→架构选型→模块拆分→决策 | 🏗️ |
-| 社交运营 | 平台组合→内容差异化→私域闭环 | 📱 |
-| 增长黑客 | 漏斗拆解→增长杠杆→实验验证 | 📈 |
-| 金融量化 | 数据→指标→模型→回测 | 💹 |
-| 财务 | 数据→报表拆解→预算归因→建议 | 💰 |
-
-**状态说明：**
-
-- 🟢 **空闲**：专家可用，可接受新任务
-- 🟡 **忙碌**：专家正在执行任务
-- ⚪ **离线**：专家不在线
-
-**操作：**
-
-1. 点击「唤醒」将离线专家设为空闲
-2. 点击「离线」将专家设为离线
-3. 点击「详情」查看专家历史任务和经验
-4. 点击「全部唤醒」批量唤醒所有专家
-
-### 3. 交叉评审
-
-组织多专家交叉评审，验证高风险决策。
-
-**评审流程：**
-
-1. 创建评审任务，选择参与专家
-2. 各专家独立输出评审意见
-3. 每个专家标注「同意/部分同意/反对 + 理由」
-4. 协调官综合评审意见给出最终结论
-
-**评审意见类型：**
-
-- ✅ **同意**：完全认可被评审内容
-- ◐ **部分同意**：认可部分内容，有改进建议
-- ❌ **反对**：不认可，提出替代方案
-
-**操作：**
-
-1. 点击「+ 新建评审」创建评审任务
-2. 选择参与评审的专家
-3. 点击「查看详情」查看评审意见
-4. 在详情中添加新的评审意见
-5. 点击「标记完成」结束评审
-
-### 4. 经验沉淀
-
-查看和管理专家团队的经验教训。
-
-**经验分类：**
-
-- 🔧 **技术经验**：技术选型、实现方案等
-- 📋 **流程经验**：协作流程、工作方法等
-- 🤝 **协作经验**：沟通协调、团队合作等
-- ⚠️ **踩坑教训**：遇到的问题和解决方案
-- ⭐ **最佳实践**：值得推广的经验
-
-**操作：**
-
-1. 使用搜索框搜索经验（支持标题、内容、专家名、标签）
-2. 点击分类标签过滤经验类型
-3. 选择专家过滤特定专家的经验
-4. 点击「导出 JSON」导出结构化数据
-5. 点击「导出 MD」导出 Markdown 文档
+After starting DSH Web service, a 🎯 floating button will appear in the bottom right corner. Click to open the management panel.
 
 ---
 
-## 🎨 界面特性
+## 📋 Feature Modules
 
-### 暗色模式
+### 1. Task Management
 
-- 自动检测系统暗色模式偏好
-- 点击 🌓 按钮手动切换
-- 所有组件完整支持暗色模式
+Manage expert team task assignments and execution status.
 
-### 响应式设计
+**Features:**
 
-- **桌面端**（> 1024px）：三列看板布局
-- **平板端**（641px - 1024px）：单列布局
-- **手机端**（≤ 640px）：全屏面板
+- **Three Views**: List view, Kanban view, DAG view
+- **Task Creation**: Fill in task name, description, priority
+- **Task Assignment**: Assign tasks to specific experts
+- **Dependency Management**: Set task dependencies, system auto-checks prerequisites
+- **Status Flow**: Pending → In Progress → Completed
 
-### 动画效果
+**Operations:**
 
-- 面板打开/关闭：缩放 + 淡入淡出
-- 卡片悬停：上浮 + 阴影增强
-- 状态指示器：脉冲动画（忙碌状态）
-- Toast 通知：滑入/滑出
+1. Click "+ New Task" to create a new task
+2. Click "Edit" on task card to modify task
+3. Click "Start" to change pending task to in progress
+4. Click "Complete" to mark task as completed
+5. Switch to "Kanban" view to see task status distribution
+6. Switch to "DAG" view to see task dependency relationships
+
+### 2. Expert Monitoring
+
+Real-time monitoring of 11 experts' work status.
+
+**Expert List:**
+
+| Expert | Role | Icon |
+|--------|------|------|
+| Data Analyst | Ask business → Break down metrics → Find anomalies → Give conclusions | 📊 |
+| Copywriter | Define persona → Selling points → Multi-version copy | ✍️ |
+| Legal Review | List elements → Mark risks → Give modification suggestions | ⚖️ |
+| Product Manager | Requirements clarification → User stories → PRD → Prioritization | 📋 |
+| Frontend Dev | Tech selection → Component design → Performance optimization | 💻 |
+| UI/UX Design | User flow → Information architecture → Visual specs | 🎨 |
+| Architect | Requirements → Architecture selection → Module breakdown → Decisions | 🏗️ |
+| Social Media | Platform mix → Content differentiation → Private domain | 📱 |
+| Growth Hacker | Funnel breakdown → Growth levers → Experiment design | 📈 |
+| Quant Finance | Data → Metrics → Models → Backtesting | 💹 |
+| Finance | Data → Report breakdown → Budget attribution → Suggestions | 💰 |
+
+**Status Description:**
+
+- 🟢 **Idle**: Expert available, can accept new tasks
+- 🟡 **Busy**: Expert is executing a task
+- ⚪ **Offline**: Expert is offline
+
+**Operations:**
+
+1. Click "Wake Up" to set offline expert to idle
+2. Click "Offline" to set expert to offline
+3. Click "Details" to view expert history and experience
+4. Click "Wake All" to batch wake up all experts
+
+### 3. Cross Review
+
+Organize multi-expert cross review to verify high-risk decisions.
+
+**Review Flow:**
+
+1. Create review task, select participating experts
+2. Each expert independently outputs review opinions
+3. Each expert marks "Agree/Partially Agree/Disagree + Reason"
+4. Coordinator synthesizes review opinions for final conclusion
+
+**Review Opinion Types:**
+
+- ✅ **Agree**: Fully认可被评审内容
+- ◐ **Partially Agree**: 认可部分内容，有改进建议
+- ❌ **Disagree**: 不认可，提出替代方案
+
+**Operations:**
+
+1. Click "+ New Review" to create review task
+2. Select experts to participate in review
+3. Click "View Details" to see review opinions
+4. Add new review opinions in details
+5. Click "Mark Complete" to end review
+
+### 4. Experience Pool
+
+View and manage expert team experience lessons.
+
+**Experience Categories:**
+
+- 🔧 **Technical Experience**: Tech selection, implementation solutions, etc.
+- 📋 **Process Experience**: Collaboration flow, work methods, etc.
+- 🤝 **Collaboration Experience**: Communication, teamwork, etc.
+- ⚠️ **Lessons Learned**: Problems encountered and solutions
+- ⭐ **Best Practices**: Experience worth promoting
+
+**Operations:**
+
+1. Use search box to search experience (supports title, content, expert name, tags)
+2. Click category tags to filter experience types
+3. Select expert to filter specific expert experience
+4. Click "Export JSON" to export structured data
+5. Click "Export MD" to export Markdown document
 
 ---
 
-## 📁 数据存储
+## 🎨 Interface Features
 
-所有数据存储在浏览器 `localStorage` 中，key 前缀为 `dsh_emp_`。
+### Dark Mode
 
-**存储结构：**
+- Auto-detect system dark mode preference
+- Click 🌓 button to manually toggle
+- All components fully support dark mode
+
+### Responsive Design
+
+- **Desktop** (> 1024px): Three-column Kanban layout
+- **Tablet** (641px - 1024px): Single column layout
+- **Mobile** (≤ 640px): Full-screen panel
+
+### Animation Effects
+
+- Panel open/close: Scale + fade in/out
+- Card hover: Lift + shadow enhancement
+- Status indicator: Pulse animation (busy state)
+- Toast notifications: Slide in/out
+
+---
+
+## 📁 Data Storage
+
+All data stored in browser `localStorage` with key prefix `dsh_emp_`.
+
+**Storage Structure:**
 
 ```
-dsh_emp_tasks      → 任务列表
-dsh_emp_experts    → 专家状态
-dsh_emp_reviews    → 评审记录
-dsh_emp_experiences → 经验沉淀
+dsh_emp_tasks      → Task list
+dsh_emp_experts    → Expert status
+dsh_emp_reviews    → Review records
+dsh_emp_experiences → Experience pool
 ```
 
-**数据导出：**
+**Data Export:**
 
-经验沉淀支持 JSON 和 Markdown 两种格式导出。
-
----
-
-## 🔧 技术规格
-
-- **实现语言**：纯 JavaScript（ES Modules）
-- **外部依赖**：零
-- **CSS 方案**：纯 CSS + Custom Properties
-- **浏览器兼容**：Chrome 80+, Firefox 78+, Safari 14+, Edge 80+
-- **包体积**：< 50KB（含 CSS）
+Experience pool supports JSON and Markdown export formats.
 
 ---
 
-## 🛠️ 开发
+## 🔧 Technical Specifications
 
-### 项目结构
+- **Implementation**: Pure JavaScript (ES Modules)
+- **External Dependencies**: Zero
+- **CSS Solution**: Pure CSS + Custom Properties
+- **Browser Compatibility**: Chrome 80+, Firefox 78+, Safari 14+, Edge 80+
+- **Bundle Size**: < 50KB (including CSS)
+
+---
+
+## 🛠️ Development
+
+### Project Structure
 
 ```
 dsh-expert-mode-pro-ui/
-├── package.json              # 插件元数据
-├── cordis.patch.yml          # DSH 集成配置
-├── DESIGN.md                 # 设计文档
-├── README.md                 # 使用文档（本文件）
+├── package.json              # Plugin metadata
+├── cordis.patch.yml          # DSH integration config
+├── DESIGN.md                 # Design document
+├── README.md                 # Usage document (English)
+├── README.zh.md              # Usage document (Chinese)
 └── lib/
-    ├── index.js              # 入口文件
-    ├── client.js             # 客户端主插件
+    ├── index.js              # Entry file
+    ├── client.js             # Client main plugin
     ├── modules/
-    │   ├── task-manager.js   # 任务管理模块
-    │   ├── expert-monitor.js # 专家监控模块
-    │   ├── review-visualization.js  # 交叉评审模块
-    │   └── experience-viewer.js     # 经验沉淀模块
+    │   ├── task-manager.js   # Task management module
+    │   ├── expert-monitor.js # Expert monitoring module
+    │   ├── review-visualization.js  # Cross review module
+    │   └── experience-viewer.js     # Experience pool module
     └── styles/
-        └── main.css          # 主样式表
+        └── main.css          # Main stylesheet
 ```
 
-### 添加新模块
+### Adding New Module
 
-1. 在 `lib/modules/` 下创建新模块文件
-2. 实现 `create*()` 工厂函数，返回 `{ render, ...methods }` 对象
-3. 在 `client.js` 中导入并注册到 `modules` 对象
-4. 在 `TABS` 数组中添加新标签页配置
+1. Create new module file in `lib/modules/`
+2. Implement `create*()` factory function, returning `{ render, ...methods }` object
+3. Import and register in `modules` object in `client.js`
+4. Add new tab configuration in `TABS` array
 
-### 自定义专家
+### Custom Expert
 
-修改 `lib/modules/expert-monitor.js` 中的 `EXPERTS` 数组：
+Modify `EXPERTS` array in `lib/modules/expert-monitor.js`:
 
 ```javascript
 const EXPERTS = [
-  { id: 'your_expert', name: '自定义专家', role: '角色描述', icon: '🔧', color: '#3b82f6' },
+  { id: 'your_expert', name: 'Custom Expert', role: 'Role description', icon: '🔧', color: '#3b82f6' },
   // ...
 ];
 ```
 
 ---
 
-## 📝 许可证
+## 📝 License
 
 MIT License
