@@ -155,37 +155,9 @@
   name: '@deepseek-ai/dsh-tool-agent-delegate'
   config: {}
 
-# ── MCP tools (vision/search/humanizer) ──
-
-- id: mcp-vision
-  name: '@deepseek-ai/dsh-mcp-client'
-  config:
-    serverName: vision
-    transport: stdio
-    command: /home/sam/dsh-venv/bin/python
-    args: ['/home/sam/.dsh/mcp_vision_server.py']
-
-- id: mcp-search
-  name: '@deepseek-ai/dsh-mcp-client'
-  config:
-    serverName: search
-    transport: stdio
-    command: /home/sam/dsh-venv/bin/python
-    args: ['/home/sam/.dsh/mcp_search_server.py']
-
-- id: mcp-ai-humanizer
-  name: '@deepseek-ai/dsh-mcp-client'
-  config:
-    serverName: ai-humanizer
-    transport: stdio
-    command: /usr/bin/python3
-    args: ['/home/sam/.dsh/mcp_ai_humanizer.py']
-
-# ── tool web ──
-
-- id: tool-web
-  name: '@deepseek-ai/dsh-tool-web'
-  config: {}
+# ── MCP tools & tool-web ──
+# NOTE: mcp-vision, mcp-search, mcp-ai-humanizer, tool-web 已由全局 cordis.patch.yml 提供，
+# 不要在 preset 中重复注册，否则 Cordis 会因 ID 冲突拒绝 mount。
 
 # ── expert subagents (v0.4.0 渐进式披露：persona 精简，方法论已移入协调官索引) ──
 
