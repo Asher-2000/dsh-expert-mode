@@ -155,6 +155,14 @@ View and manage expert team experience lessons.
 - Status indicator: Pulse animation (busy state)
 - Toast notifications: Slide in/out
 
+### 🌐 Internationalization (i18n)
+
+- **Bilingual Support**: Chinese (中文) and English
+- **One-click Switch**: Click EN/中 button in panel header
+- **Language Persistence**: Preference saved to localStorage
+- **Full Translation**: All UI text, buttons, labels, messages
+- **Easy Extension**: Add new languages in `lib/i18n.js`
+
 ---
 
 ## 📁 Data Storage

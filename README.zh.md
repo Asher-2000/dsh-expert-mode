@@ -220,6 +220,7 @@ dsh-expert-mode/
 │       └── lib/
 │           ├── index.js
 │           ├── client.js
+│           ├── i18n.js                  # 国际化配置
 │           ├── modules/
 │           │   ├── task-manager.js
 │           │   ├── expert-monitor.js
@@ -249,6 +250,12 @@ dsh-expert-mode/
 - 卡片悬停：上浮 + 阴影增强
 - 状态指示器：脉冲动画（忙碌状态）
 - Toast 通知：滑入/滑出
+
+### 🌐 国际化（i18n）
+- **双语支持**：中文和英文（English）
+- **一键切换**：点击面板右上角 EN/中 按钮
+- **语言持久化**：偏好设置保存到 localStorage
+- **完整翻译**：所有界面文本、按钮、标签、消息
 
 ---
 
