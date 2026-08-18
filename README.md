@@ -54,6 +54,33 @@ No custom prompts to write. No multi-config to maintain. Just install and use.
 
 ## Core Mechanisms
 
+### Progressive Disclosure (v0.5.0)
+
+The Coordinator holds a complete expert methodology index and injects on-demand — not dumping all expert personas into context at startup.
+
+| Metric | Before | After | Improvement |
+|--------|--------|-------|-------------|
+| Expert persona tokens | 3850 chars | 533 chars | **-86%** |
+| Total prompt tokens | ~2205 | ~1582 | **-28%** |
+
+**How it works:**
+- Coordinator persona contains a methodology index for all 11 experts (methodology + output format + iron rules)
+- Expert subagent personas stripped to minimum (role + iron rule + completion criteria only)
+- During delegation, Coordinator extracts the relevant methodology from the index and injects it via Near-distance Guidance
+- Subagent starts with complete "who I am, what to do, how to deliver" context
+
+### Anchored Non-degradation (v0.5.0)
+
+Solves the "trajectory flip" problem caused by system prompt mutations, ensuring reasoning style stability:
+
+| Anchor | Purpose |
+|--------|---------|
+| **Style Lock** | Maintain default reasoning style regardless of context changes |
+| **Evidence Priority** | Every conclusion backed by data/logic; mark uncertain items as "assumption" |
+| **Step-by-step** | Complex tasks decomposed into single steps; no skipping |
+| **Consistency Check** | Verify reasoning style matches previous turn before output |
+| **Anti-drift** | Proactively save state before context window fills |
+
 ### Five Anchor Constraints
 
 The Coordinator self-checks five anchor points every turn to prevent drift and loops:
@@ -68,15 +95,15 @@ The Coordinator self-checks five anchor points every turn to prevent drift and l
 
 ### Near-distance Guidance
 
-Each expert has a built-in guidance template. The Coordinator fills in specifics during delegation:
+During delegation, the Coordinator extracts the relevant methodology from the index and fills in the structured guidance template:
 
 ```
 ── Near-distance Guidance ──
 Identity: You are [expert role]
 Task: {specific task description}
 Input: {input data}
-Output format: [this expert's delivery format]
-Completion criteria: [what counts as done]
+Output format: [extracted from methodology index]
+Completion criteria: {clear delivery standard}
 ```
 
 Subagents start with clear "who I am, what to do, how to deliver."
@@ -156,12 +183,20 @@ A: Built on top of the official standard preset combination, preserving the full
 ```
 .
 ├── preset.yml          # Preset metadata (name + description)
-├── agent.cordis.yml    # Coordinator persona + 11 expert subagent tool definitions
+├── agent.cordis.yml    # Coordinator persona + methodology index + 11 expert subagent tool definitions
 ├── expert-mode-en/     # English preset
 ├── README.md
 ├── README.zh.md
 └── LICENSE
 ```
+
+---
+
+## Changelog
+
+- **v0.5.0** — Progressive disclosure + anchored non-degradation (prompt tokens -28%, reasoning stability 9/10)
+- **v0.4.0** — Five anchors + near-distance guidance + cross review + experience pool
+- **v0.3.0** — Expert persistence + communication protocol
 
 ---
 
