@@ -159,92 +159,100 @@
 # NOTE: mcp-vision, mcp-search, mcp-ai-humanizer, tool-web 已由全局 cordis.patch.yml 提供，
 # 不要在 preset 中重复注册，否则 Cordis 会因 ID 冲突拒绝 mount。
 
-# ── expert subagents (v0.4.0 渐进式披露：persona 精简，方法论已移入协调官索引) ──
+# ── expert subagents (v0.5.0 渐进式披露 + isolation realm) ──
+# 必须包裹在 group+isolate 中，与 standard preset 的 delegation group 一致，
+# 否则 dsh-tool-subagent 会 leak 到 root realm 与 host 的 delegation 冲突。
 
-- id: tool-subagent-expert-data-analyst
-  name: '@deepseek-ai/dsh-tool-subagent'
+- id: expert-delegation
+  name: cordis:group
+  group: true
+  isolate:
+    expertDelegation: true
   config:
-    provider: spawn
-    toolName: expert_data_analyst
-    persona: |
-      你是数据分析师。铁律：不编造数据，缺失标注assumption。用户能直接用你的结论做决策。
+    - id: tool-subagent-expert-data-analyst
+      name: '@deepseek-ai/dsh-tool-subagent'
+      config:
+        provider: spawn
+        toolName: expert_data_analyst
+        persona: |
+          你是数据分析师。铁律：不编造数据，缺失标注assumption。用户能直接用你的结论做决策。
 
-- id: tool-subagent-expert-copywriter
-  name: '@deepseek-ai/dsh-tool-subagent'
-  config:
-    provider: spawn
-    toolName: expert_copywriter
-    persona: |
-      你是文案撰写专家。铁律：不写空泛套话，每版有明确差异化。用户能直接选用其中一个版本。
+    - id: tool-subagent-expert-copywriter
+      name: '@deepseek-ai/dsh-tool-subagent'
+      config:
+        provider: spawn
+        toolName: expert_copywriter
+        persona: |
+          你是文案撰写专家。铁律：不写空泛套话，每版有明确差异化。用户能直接选用其中一个版本。
 
-- id: tool-subagent-expert-legal-review
-  name: '@deepseek-ai/dsh-tool-subagent'
-  config:
-    provider: spawn
-    toolName: expert_legal_review
-    persona: |
-      你是法律顾问，擅长合同与文书审查。铁律：涉及具体法规先检索核实，不凭记忆断言。用户能据此直接修改合同/文书。
+    - id: tool-subagent-expert-legal-review
+      name: '@deepseek-ai/dsh-tool-subagent'
+      config:
+        provider: spawn
+        toolName: expert_legal_review
+        persona: |
+          你是法律顾问，擅长合同与文书审查。铁律：涉及具体法规先检索核实，不凭记忆断言。用户能据此直接修改合同/文书。
 
-- id: tool-subagent-expert-product-manager
-  name: '@deepseek-ai/dsh-tool-subagent'
-  config:
-    provider: spawn
-    toolName: expert_product_manager
-    persona: |
-      你是产品经理。铁律：先问清场景再下笔，不臆造用户需求。开发团队能据此启动开发。
+    - id: tool-subagent-expert-product-manager
+      name: '@deepseek-ai/dsh-tool-subagent'
+      config:
+        provider: spawn
+        toolName: expert_product_manager
+        persona: |
+          你是产品经理。铁律：先问清场景再下笔，不臆造用户需求。开发团队能据此启动开发。
 
-- id: tool-subagent-expert-frontend-dev
-  name: '@deepseek-ai/dsh-tool-subagent'
-  config:
-    provider: spawn
-    toolName: expert_frontend_dev
-    persona: |
-      你是前端工程师。铁律：优先现有方案，不盲目引入新依赖。代码可直接运行，选型理由充分。
+    - id: tool-subagent-expert-frontend-dev
+      name: '@deepseek-ai/dsh-tool-subagent'
+      config:
+        provider: spawn
+        toolName: expert_frontend_dev
+        persona: |
+          你是前端工程师。铁律：优先现有方案，不盲目引入新依赖。代码可直接运行，选型理由充分。
 
-- id: tool-subagent-expert-uiux-design
-  name: '@deepseek-ai/dsh-tool-subagent'
-  config:
-    provider: spawn
-    toolName: expert_uiux_design
-    persona: |
-      你是UI/UX设计师。铁律：避免AI slop（紫渐变、emoji图标、圆角卡片堆砌）。设计师能据此直接出图。
+    - id: tool-subagent-expert-uiux-design
+      name: '@deepseek-ai/dsh-tool-subagent'
+      config:
+        provider: spawn
+        toolName: expert_uiux_design
+        persona: |
+          你是UI/UX设计师。铁律：避免AI slop（紫渐变、emoji图标、圆角卡片堆砌）。设计师能据此直接出图。
 
-- id: tool-subagent-expert-architect
-  name: '@deepseek-ai/dsh-tool-subagent'
-  config:
-    provider: spawn
-    toolName: expert_architect
-    persona: |
-      你是系统架构师。铁律：给多个方案并说明权衡，不武断给唯一解。技术负责人能据此做架构决策。
+    - id: tool-subagent-expert-architect
+      name: '@deepseek-ai/dsh-tool-subagent'
+      config:
+        provider: spawn
+        toolName: expert_architect
+        persona: |
+          你是系统架构师。铁律：给多个方案并说明权衡，不武断给唯一解。技术负责人能据此做架构决策。
 
-- id: tool-subagent-expert-social-media
-  name: '@deepseek-ai/dsh-tool-subagent'
-  config:
-    provider: spawn
-    toolName: expert_social_media
-    persona: |
-      你是社交平台运营专家。铁律：标题有钩子但真实，不标题党；宁做对一个平台，不敷衍所有平台。运营团队能据此直接发布。
+    - id: tool-subagent-expert-social-media
+      name: '@deepseek-ai/dsh-tool-subagent'
+      config:
+        provider: spawn
+        toolName: expert_social_media
+        persona: |
+          你是社交平台运营专家。铁律：标题有钩子但真实，不标题党；宁做对一个平台，不敷衍所有平台。运营团队能据此直接发布。
 
-- id: tool-subagent-expert-growth
-  name: '@deepseek-ai/dsh-tool-subagent'
-  config:
-    provider: spawn
-    toolName: expert_growth
-    persona: |
-      你是增长黑客。铁律：每建议配可验证指标，不说空话。增长团队能据此设计并执行实验。
+    - id: tool-subagent-expert-growth
+      name: '@deepseek-ai/dsh-tool-subagent'
+      config:
+        provider: spawn
+        toolName: expert_growth
+        persona: |
+          你是增长黑客。铁律：每建议配可验证指标，不说空话。增长团队能据此设计并执行实验。
 
-- id: tool-subagent-expert-quant-finance
-  name: '@deepseek-ai/dsh-tool-subagent'
-  config:
-    provider: spawn
-    toolName: expert_quant_finance
-    persona: |
-      你是金融/量化分析专家。铁律：涉及具体行情/政策先检索核实，不凭记忆断言，不构成投资建议。投资决策者能据此评估风险。
+    - id: tool-subagent-expert-quant-finance
+      name: '@deepseek-ai/dsh-tool-subagent'
+      config:
+        provider: spawn
+        toolName: expert_quant_finance
+        persona: |
+          你是金融/量化分析专家。铁律：涉及具体行情/政策先检索核实，不凭记忆断言，不构成投资建议。投资决策者能据此评估风险。
 
-- id: tool-subagent-expert-finance
-  name: '@deepseek-ai/dsh-tool-subagent'
-  config:
-    provider: spawn
-    toolName: expert_finance
-    persona: |
-      你是企业财务专家。铁律：涉及会计准则/税法须检索核实；不构成审计或税务专业意见。财务负责人能据此做预算/风控决策。
+    - id: tool-subagent-expert-finance
+      name: '@deepseek-ai/dsh-tool-subagent'
+      config:
+        provider: spawn
+        toolName: expert_finance
+        persona: |
+          你是企业财务专家。铁律：涉及会计准则/税法须检索核实；不构成审计或税务专业意见。财务负责人能据此做预算/风控决策。
