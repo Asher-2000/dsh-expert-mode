@@ -1,40 +1,56 @@
-# DSH Expert Mode（专家模式）
+<p align="center">
+  <img src="assets/main-ui.jpg" alt="DSH Expert Mode" width="600" />
+</p>
 
-> 一个 agent preset，让 DSH 变成「1 位协调官 + 11 位专家」的多代理团队。
+<h1 align="center">🧠 DSH Expert Mode</h1>
 
-[![dsh-plugin](https://img.shields.io/badge/dsh--plugin-ready-478CBF?logo=deepseek&logoColor=white)](https://github.com/topics/dsh-plugin)
-[![Featured in Awesome DSH Plugin](https://img.shields.io/badge/awesome--dsh--plugin-featured-1a56db?logo=deepseek&logoColor=white)](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Stars](https://img.shields.io/github/stars/Asher-2000/dsh-expert-mode)](https://github.com/Asher-2000/dsh-expert-mode)
+<p align="center">
+  <strong>一个 Agent Preset，让 DSH 变成「1 位协调官 + 11 位专家」的多代理团队</strong>
+</p>
 
-**中文** | [English](README.md)
+<p align="center">
+  <a href="https://github.com/topics/dsh-plugin"><img src="https://img.shields.io/badge/dsh--plugin-ready-478CBF?logo=deepseek&logoColor=white" alt="dsh-plugin"></a>
+  <a href="https://github.com/awesome-dsh-plugin/awesome-dsh-plugin"><img src="https://img.shields.io/badge/awesome--dsh--plugin-featured-1a56db?logo=deepseek&logoColor=white" alt="Featured in Awesome DSH Plugin"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT"></a>
+  <a href="https://github.com/Asher-2000/dsh-expert-mode"><img src="https://img.shields.io/github/stars/Asher-2000/dsh-expert-mode" alt="Stars"></a>
+</p>
 
----
-
-## 它做了什么
-
-装上这个 preset 后，DSH 会自动切换成「首席协调官」模式：
-
-- 收到任务 → 判断领域 → 委派给最合适的专家子代理
-- 复杂任务可同时调度多个专家并行
-- 简单任务协调官自己搞定，不强行委派
-- 专家完成任务后保持在线，可追加修改
-
-不需要自己写 prompt，不需要维护多套配置——装上就用。
+<p align="center">
+  <a href="README.zh.md">中文</a> · <a href="README.md">English</a>
+</p>
 
 ---
 
-## 运行效果
+## ✨ 它做了什么
 
-![DSH Expert Mode 主界面](assets/main-ui.jpg)
-*DSH 工作区中选择「专家模式」preset 即可使用*
+装上这个 preset 后，DSH 自动切换成「首席协调官」模式：
 
-![专家模式运行实况：多专家子代理并行](assets/expert-mode-run.jpg)
-*5 个专家子代理同时工作，实时展示 token 消耗与耗时*
+| 场景 | 行为 |
+|------|------|
+| 收到任务 | 判断领域 → 委派给最合适的专家 |
+| 复杂任务 | 同时调度多个专家并行 |
+| 简单任务 | 协调官自己搞定，不强行委派 |
+| 任务完成 | 专家保持在线，可追加修改 |
+
+不需要自己写 prompt，不需要维护多套配置——**装上就用**。
 
 ---
 
-## 11 位专家
+## 🖼️ 运行效果
+
+<p align="center">
+  <img src="assets/main-ui.jpg" alt="DSH Expert Mode 主界面" width="500" /><br/>
+  <em>DSH 工作区中选择「专家模式」preset 即可使用</em>
+</p>
+
+<p align="center">
+  <img src="assets/expert-mode-run.jpg" alt="专家模式运行实况" width="500" /><br/>
+  <em>5 个专家子代理同时工作，实时展示 token 消耗与耗时</em>
+</p>
+
+---
+
+## 🧩 11 位专家
 
 | 专家 | 工具 | 擅长 |
 |------|------|------|
@@ -52,36 +68,46 @@
 
 ---
 
-## 核心机制
+## 🔧 核心机制
 
-### 渐进式披露（v0.5.0）
+### 🚀 快速通道
 
-协调官持有完整的专家方法论索引，按需注入——不是把所有专家的完整 persona 一次性塞进上下文。
+以下情况协调官**直接回答**，不委派专家：
+
+- 单文件读写/编辑
+- 简单问答（不涉及专业知识）
+- 闲聊/打招呼
+- 用户明确说「你直接做」
+- 任务能用一条命令完成
+
+### ⚡ 故障恢复
+
+- 专家调用超时/失败 → **自动重试 1 次**
+- 连续失败 2 次 → 告知用户，建议换方案
+- 专家输出明显跑题 → **召回并补充引导**
+
+### 📋 渐进式披露（v0.5.0）
+
+协调官持有完整的专家方法论索引，**按需注入**——不是把所有专家的完整 persona 一次性塞进上下文。
 
 | 指标 | 旧版 | 新版 | 提升 |
 |------|------|------|------|
 | 专家 persona tokens | 3850 chars | 533 chars | **-86%** |
 | 总 prompt tokens | ~2205 | ~1582 | **-28%** |
 
-**工作原理：**
-- 协调官 persona 内置 11 位专家的「方法论索引」（方法论 + 产出格式 + 铁律）
-- 专家子代理的 persona 精简到最小（只保留角色 + 铁律 + 完成标准）
-- 委派时协调官从索引中提取对应方法论，通过近距离引导模板注入子代理
-- 子代理一启动就获得完整的「我是谁、要做什么、怎么交付」信息
-
-### 锚定不降智（v0.5.0）
+### 🎯 锚定不降智（v0.5.0）
 
 解决系统 prompt 突变导致的「轨迹翻转」问题，确保推理风格稳定性：
 
 | 锚点 | 作用 |
 |------|------|
-| **风格锁定** | 始终使用默认推理风格，不因上下文变化切换 |
-| **证据优先** | 每个结论必须有数据/逻辑依据，不确定时标注「假设」 |
-| **逐步推进** | 复杂任务分步执行，每步只做一件事，禁止跳步 |
-| **一致性校验** | 输出前检查推理风格是否与上一轮一致，有矛盾则修正 |
-| **防漂移** | 上下文窗口满时主动保存状态，确保下一轮无缝衔接 |
+| **风格锁定** | 始终使用默认推理风格 |
+| **证据优先** | 每个结论必须有数据/逻辑依据 |
+| **逐步推进** | 复杂任务分步执行，禁止跳步 |
+| **一致性校验** | 输出前检查推理风格是否一致 |
+| **防漂移** | 上下文满时主动保存状态 |
 
-### 五锚约束
+### 🏗️ 五锚约束
 
 协调官每轮对话强制自检，防止跑题和低效循环：
 
@@ -93,22 +119,23 @@
 | **协作检查** | 委派前判断是否需要跨专家协作 |
 | **资源感知** | 全程监控 token，超 70% 自动精简 |
 
-### 近距离引导
+### 🎯 近距离引导
 
-协调官委派专家时，从方法论索引中提取对应信息，填入结构化引导模板：
+协调官委派专家时，填入结构化引导模板：
 
 ```
-── 近距离引导 ──
+┌─ 近距离引导 ─┐
 身份：你是 [专家角色]
 任务：{具体任务描述}
 输入：{输入数据}
-输出格式：[从方法论索引中取该专家的输出格式]
+输出格式：[从方法论索引中取]
 完成标准：[明确的交付标准]
+└──────────────┘
 ```
 
 子代理一启动就明确「我是谁、要做什么、怎么交付」。
 
-### 专家间通信协议
+### 🔗 专家间通信协议
 
 跨专家协作时，协调官通过结构化消息路由：
 
@@ -118,44 +145,29 @@
 数据：{专家 A 的结论摘要}
 ```
 
-### 快速通道
-
-以下情况协调官直接回答，不委派专家：
-- 单文件读写/编辑
-- 简单问答（不涉及专业知识）
-- 闲聊/打招呼
-- 用户明确说"你直接做"
-- 任务能用一条命令完成
-
-### 故障恢复
-
-- 专家调用超时/失败 → 自动重试 1 次
-- 连续失败 2 次 → 告知用户，建议换方案
-- 专家输出明显跑题 → 召回并补充引导
-
-### 交叉评审
+### 🔍 交叉评审
 
 高风险任务（架构选型、合同审查、财务分析）自动触发多专家独立评审，协调官综合结论。
 
-### 经验沉淀
+### 💾 经验沉淀
 
 专家完成重要任务后，提取经验写入 `.expert-mode/experts/{name}/lessons.md`，下次同类任务自动注入。
 
-### 专家持久化
+### 🧠 专家持久化
 
-专家完成任务后不销毁，保持在线。协调官可以唤醒专家追加修改，上下文完整保留。
+专家完成任务后**不销毁**，保持在线。协调官可以唤醒专家追加修改，上下文完整保留。
 
 ---
 
-## 安装
+## 📦 安装
 
-**方式一：dsh plugin add（推荐）**
+### 方式一：dsh plugin add（推荐）
 
 ```bash
 dsh plugin --profile web add github:Asher-2000/dsh-expert-mode
 ```
 
-**方式二：git clone**
+### 方式二：git clone
 
 ```bash
 mkdir -p ~/.dsh/.agent-presets
@@ -168,19 +180,19 @@ git clone https://github.com/Asher-2000/dsh-expert-mode.git ~/.dsh/.agent-preset
 cp -r ~/.dsh/.agent-presets/expert-mode/expert-mode-en ~/.dsh/.agent-presets/expert-mode-en
 ```
 
-**方式三：手动下载**
+### 方式三：手动下载
 
 从 [Releases](https://github.com/Asher-2000/dsh-expert-mode/releases) 下载最新版，把 `preset.yml` + `agent.cordis.yml` 放到 `~/.dsh/.agent-presets/expert-mode/`。
 
 ---
 
-## 使用
+## 🚀 使用
 
 安装后，在 DSH **Web GUI 新建会话**时选择「专家模式」preset 即可。
 
 ---
 
-## FAQ
+## ❓ FAQ
 
 **Q: 会额外消耗模型额度吗？**
 A: 委派给专家子代理时会产生子代理的模型调用（DSH 子代理机制），与官方子代理功能一致；简单任务协调官直接回答，不产生额外调用。
@@ -193,38 +205,50 @@ A: 基于官方 standard preset 组合改造，保留完整工具集，仅增加
 
 ---
 
-## 文件结构
+## 📁 文件结构
 
 ```
 .
-├── preset.yml          # preset 元信息（名称 + 描述）
-├── agent.cordis.yml    # 协调官 persona + 方法论索引 + 11 位专家子代理工具定义
-├── expert-mode-en/     # 英文版 preset
-├── README.md
-├── README.zh.md
+├── preset.yml              # preset 元信息（名称 + 描述）
+├── agent.cordis.yml        # 协调官 persona + 方法论索引 + 专家子代理工具定义
+├── expert-mode-en/         # 英文版 preset
+│   ├── preset.yml
+│   └── agent.cordis.yml
+├── .expert-mode/           # 专家经验库
+│   └── experts/            # 每个专家的 lessons.md
+├── assets/                 # 截图
+├── README.md               # English
+├── README.zh.md            # 中文
 └── LICENSE
 ```
 
 ---
 
-## 版本历史
+## 📝 版本历史
 
-- **v0.6.0** — 快速通道 + 故障恢复 + 双语支持完善（中英文功能对齐）
-- **v0.5.0** — 渐进式披露 + 锚定不降智（prompt tokens -28%，推理风格稳定性 9/10）
-- **v0.4.0** — 五锚约束 + 近距离引导 + 交叉评审 + 经验沉淀
-- **v0.3.0** — 专家持久化 + 通信协议
+| 版本 | 更新 |
+|------|------|
+| **v0.6.0** | 快速通道 + 故障恢复 + 双语支持完善 |
+| **v0.5.0** | 渐进式披露 + 锚定不降智（prompt tokens -28%） |
+| **v0.4.0** | 五锚约束 + 近距离引导 + 交叉评审 + 经验沉淀 |
+| **v0.3.0** | 专家持久化 + 通信协议 |
+| **v0.2.0** | 基础多专家委派 |
 
 ---
 
-## 社区收录
+## 🏆 社区收录
 
 - 📢 入选 **Awesome DSH Plugin 精选列表**：https://github.com/awesome-dsh-plugin/awesome-dsh-plugin
 - 🏷️ GitHub `dsh-plugin` topic 收录：https://github.com/topics/dsh-plugin
 
-## Tags
+---
+
+## 🏷️ Tags
 
 `dsh` `deepseek-harness` `agent-preset` `expert-mode` `multi-agent` `subagent` `ai-agent` `dsh-plugin`
 
-## License
+---
+
+## 📄 License
 
 MIT License — see [LICENSE](LICENSE).
