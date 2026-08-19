@@ -86,7 +86,7 @@ The Coordinator **answers directly** without delegating for:
 - 2 consecutive failures → inform user, suggest alternative
 - Expert output clearly off-topic → **recall and re-guide**
 
-### 📋 Progressive Disclosure (v0.5.0)
+### 📋 Progressive Disclosure 
 
 The Coordinator holds a complete expert methodology index and **injects on-demand** — not dumping all expert personas into context at startup.
 
@@ -95,7 +95,7 @@ The Coordinator holds a complete expert methodology index and **injects on-deman
 | Expert persona tokens | 3850 chars | 533 chars | **-86%** |
 | Total prompt tokens | ~2205 | ~1582 | **-28%** |
 
-### 🎯 Anchored Non-degradation (v0.5.0)
+### 🎯 Anchored Non-degradation 
 
 Solves the "trajectory flip" problem caused by system prompt mutations:
 
