@@ -118,6 +118,21 @@ Task: Design frontend data display component based on analysis conclusions
 Data: {Expert A's conclusion summary}
 ```
 
+### Quick Path
+
+The Coordinator answers directly without delegating for:
+- Single file read/write/edit
+- Simple Q&A (no domain expertise needed)
+- Casual chat / greetings
+- User says "do it yourself" or "no delegation needed"
+- Task completable with a single command
+
+### Fault Recovery
+
+- Expert call timeout/failure → auto-retry once
+- 2 consecutive failures → inform user, suggest alternative
+- Expert output clearly off-topic → recall and re-guide
+
 ### Cross Review
 
 High-risk tasks (architecture selection, contract review, financial analysis) trigger multi-expert independent review. The Coordinator synthesizes conclusions.
@@ -194,6 +209,7 @@ A: Built on top of the official standard preset combination, preserving the full
 
 ## Changelog
 
+- **v0.6.0** — Quick Path + Fault Recovery + bilingual parity (EN features aligned with ZH)
 - **v0.5.0** — Progressive disclosure + anchored non-degradation (prompt tokens -28%, reasoning stability 9/10)
 - **v0.4.0** — Five anchors + near-distance guidance + cross review + experience pool
 - **v0.3.0** — Expert persistence + communication protocol
