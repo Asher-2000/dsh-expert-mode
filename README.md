@@ -5,7 +5,7 @@
 <h1 align="center">🧠 DSH Expert Mode</h1>
 
 <p align="center">
-  <strong>One agent preset that turns DSH into a "1 Coordinator + 11 Experts" multi-agent team</strong>
+  <strong>One agent preset that turns DSH into a "1 Coordinator + 16 Experts" multi-agent team</strong>
 </p>
 
 <p align="center">
@@ -50,7 +50,7 @@ No custom prompts to write. No multi-config to maintain. **Just install and use.
 
 ---
 
-## 🧩 11 Experts
+## 🧩 16 Experts
 
 | Expert | Tool | Domain |
 |--------|------|--------|
@@ -61,6 +61,11 @@ No custom prompts to write. No multi-config to maintain. **Just install and use.
 | 🖥️ Frontend Dev | `expert_frontend_dev` | Web frontend implementation, component development |
 | 🎨 UI/UX Design | `expert_uiux_design` | Interface design, interaction patterns, design systems |
 | 🏗️ Architect | `expert_architect` | System design, tech selection, architecture review |
+| 🖥️ Backend Dev | `expert_backend_dev` | API development, server logic, database integration |
+| 🛠️ DevOps | `expert_devops` | CI/CD, Docker, Kubernetes, deployment automation |
+| 🗄️ Database | `expert_database` | Schema design, query optimization, data modeling |
+| 🧪 QA Engineer | `expert_qa_engineer` | Test strategy, automation, quality assurance |
+| 🔒 Security | `expert_security` | Code audit, vulnerability assessment, security hardening |
 | 📱 Social Media | `expert_social_media` | Multi-platform content distribution, account management |
 | 🚀 Growth Hacker | `expert_growth` | Growth strategy, conversion funnels, A/B testing |
 | 💹 Quant Finance | `expert_quant_finance` | Quantitative models, financial analysis, risk control |
@@ -252,3 +257,4 @@ A: Built on top of the official standard preset combination, preserving the full
 ## 📄 License
 
 MIT License — see [LICENSE](LICENSE).
+
