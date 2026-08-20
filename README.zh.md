@@ -61,6 +61,11 @@
 | 🖥️ 前端开发 | `expert_frontend_dev` | Web 前端实现、组件开发 |
 | 🎨 UI/UX 设计 | `expert_uiux_design` | 界面设计、交互方案、设计系统 |
 | 🏗️ 架构师 | `expert_architect` | 系统设计、技术选型、架构评审 |
+| 🖥️ 后端开发 | `expert_backend_dev` | API 开发、服务器逻辑、数据库集成 |
+| 🛠️ DevOps | `expert_devops` | CI/CD、Docker、Kubernetes、部署自动化 |
+| 🗄️ 数据库 | `expert_database` | Schema 设计、查询优化、数据建模 |
+| 🧪 测试工程师 | `expert_qa_engineer` | 测试策略、自动化、质量保证 |
+| 🔒 安全专家 | `expert_security` | 代码审计、漏洞评估、安全加固 |
 | 📱 全社交平台运营 | `expert_social_media` | 多平台内容分发、账号运营 |
 | 🚀 增长黑客 | `expert_growth` | 增长策略、转化漏斗、A/B 测试 |
 | 💹 金融/量化 | `expert_quant_finance` | 量化模型、金融分析、风控 |
@@ -252,3 +257,4 @@ A: 基于官方 standard preset 组合改造，保留完整工具集，仅增加
 ## 📄 License
 
 MIT License — see [LICENSE](LICENSE).
+
