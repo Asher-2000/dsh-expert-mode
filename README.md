@@ -92,6 +92,7 @@ No custom prompts to write. No multi-config to maintain. **Just install and use.
 | 🔄 **Five-Anchor Constraint** | Prevents topic drift with per-turn self-check |
 | 🤝 **Cross Review** | High-risk tasks get multi-expert independent review |
 | 💾 **Experience Pool** | Lessons learned are saved and injected next time |
+| 💬 **Subagent Communication** | Experts can communicate via send_message (continuable mode) |
 | ⚡ **Fault Recovery** | Auto-retry on timeout, strategy switch on failure |
 | 📉 **Progressive Disclosure** | Methodology injected on-demand, 28% token savings |
 | 🌐 **Bilingual** | Complete EN/ZH documentation |
@@ -187,3 +188,4 @@ MIT License - see [LICENSE](LICENSE) for details.
 - [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) - The core framework
 - [Cordis](https://github.com/cordiverse/cordis) - Plugin system
 - [Awesome DSH Plugin](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin) - Community listing
+
