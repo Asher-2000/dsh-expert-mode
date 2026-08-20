@@ -92,6 +92,7 @@
 | 🔄 **五锚约束** | 每轮自检，防止跑题和低效循环 |
 | 🤝 **交叉评审** | 高风险任务多专家独立评审 |
 | 💾 **经验沉淀** | 教训自动保存，下次注入 |
+| 💬 **子代理通信** | 专家间可通过 send_message 通信（continuable 模式） |
 | ⚡ **故障恢复** | 超时自动重试，连续失败换方案 |
 | 📉 **渐进式披露** | 方法论按需注入，token 减少 28% |
 | 🌐 **中英双语** | 完整中英文文档 |
@@ -187,3 +188,4 @@ MIT 许可证 - 详见 [LICENSE](LICENSE)。
 - [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) - 核心框架
 - [Cordis](https://github.com/cordiverse/cordis) - 插件系统
 - [Awesome DSH Plugin](https://github.com/awesome-dsh-plugin/awesome-dsh-plugin) - 社区收录
+
