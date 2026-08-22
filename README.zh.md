@@ -133,6 +133,29 @@ dsh web
 
 然后在工作区预设选择器中选择 **「专家模式」**。
 
+### 可选：跨会话记忆（recommended）
+
+专家模式预设本身**不注册**跨会话记忆服务（它是 HOST-PLANE 插件，注册在预设里会与宿主冲突导致预设挂载失败）。如需启用跨会话记忆，请单独安装 [dsh-memory-connect](https://github.com/Asher-2000/dsh-memory-connect) 到**宿主组合**：
+
+```bash
+# 1. 克隆 memory 插件
+git clone https://github.com/Asher-2000/dsh-memory-connect.git
+cd dsh-memory-connect
+npm install github:Asher-2000/dsh-memory-connect#v0.4.0  # 或手动放入 dsh 依赖树
+
+# 2. 在宿主组合注册（以 web profile 为例，编辑 ~/.dsh/profiles/web/cordis.patch.yml 追加）：
+# - id: cross-session-memory
+#   name: '@deepseek-ai/dsh-memory-connect'
+#   config:
+#     path: ~/.dsh/memory.db
+#     openAt: startup
+
+# 3. 重启 DSH web
+dsh web
+```
+
+> ⚠️ **重要**：**不要**把 `@deepseek-ai/dsh-memory-connect` 加进本预设的 `agent.cordis.yml`。它是 HOST-PLANE 插件（inject `sessions` + `systemPrompt`），预设内注册会报 `service has been registered at <cross-session-memory>`，导致专家模式挂载失败、UI 回退到默认预设。本预设已内置该说明注释。
+
 ---
 
 ## 🚀 快速开始

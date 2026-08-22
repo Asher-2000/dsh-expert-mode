@@ -133,6 +133,29 @@ dsh web
 
 Then select **"专家模式"** in the workspace preset selector.
 
+### Optional: Cross-session memory (recommended)
+
+The expert-mode preset itself does **not** register the cross-session memory service — it is a HOST-PLANE plugin, and registering it inside a preset conflicts with the host composition (causing preset mount failure). To enable cross-session memory, install [dsh-memory-connect](https://github.com/Asher-2000/dsh-memory-connect) separately into the **host composition**:
+
+```bash
+# 1. Clone the memory plugin
+git clone https://github.com/Asher-2000/dsh-memory-connect.git
+cd dsh-memory-connect
+npm install github:Asher-2000/dsh-memory-connect#v0.4.0  # or place it into the dsh dependency tree manually
+
+# 2. Register it in the host composition (e.g. append to ~/.dsh/profiles/web/cordis.patch.yml):
+# - id: cross-session-memory
+#   name: '@deepseek-ai/dsh-memory-connect'
+#   config:
+#     path: ~/.dsh/memory.db
+#     openAt: startup
+
+# 3. Restart DSH web
+dsh web
+```
+
+> ⚠️ **Important**: **Do NOT** add `@deepseek-ai/dsh-memory-connect` into this preset's `agent.cordis.yml`. It is a HOST-PLANE plugin (injects `sessions` + `systemPrompt`); registering it inside the preset throws `service has been registered at <cross-session-memory>`, which makes the expert-mode preset fail to mount and the UI fall back to the default preset. This preset ships with an explanatory comment about it.
+
 ---
 
 ## 🚀 Quick Start

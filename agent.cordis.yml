@@ -318,10 +318,6 @@
           你是一位资深安全专家。方法论：威胁建模→代码审计→漏洞扫描→渗透测试→安全加固。
           产出：安全审计报告 + 漏洞清单 + 修复建议。铁律：OWASP Top 10，最小权限原则。
 
-    # ── send_message: 子代理间通信 ──────────────────────────────────────────
-    - id: tool-send-message
-      name: '@deepseek-ai/dsh-tool-send-message'
-
     # ── 专家模式：16 位领域专家子代理 ──────────────────────────────────────
     # 每个专家 = 一个带独立 persona 的 spawn 子代理工具，首席协调官按任务特性委派。
     - id: tool-subagent-expert-data-analyst
@@ -565,15 +561,11 @@
     searchTimeoutMs: 60000
 
 # ── cross-session memory ─────────────────────────────────────────────────────
-
-# Memory service: automatic extraction, indexing, and recall across sessions.
-# This is a HOST-PLANE service because it serves cross-session queries.
-- id: memory
-  name: '@deepseek-ai/dsh-memory-connect'
-  config:
-    path: ~/.dsh/memory.db
-    openAt: startup
-    maxRecallCount: 10
-    decayRate: 0.02
-    journalMode: wal
-    enableSoul: true
+# 注: 跨会话记忆服务 (@deepseek-ai/dsh-memory-connect) 是 HOST-PLANE 插件:
+# 它 inject ['sessions', 'systemPrompt'] 并注册 systemPrompt.context 回调,
+# 必须运行在宿主组合 (如 ~/.dsh/profiles/web/cordis.patch.yml 或
+# ~/.dsh/cordis.patch.yml), 不能在 agent preset 中注册——否则会与宿主
+# 组合的全局服务冲突 ("service has been registered at <cross-session-memory>")
+# 导致本预设挂载失败、UI 回退到默认预设。
+# 如需启用跨会话记忆, 请按 README 的「可选: 跨会话记忆」一节单独安装。
+# 本预设不注册 memory, 专家协调官仍可通过宿主组合的全局服务访问记忆。
