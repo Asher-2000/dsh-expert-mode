@@ -39,3 +39,9 @@ dsh-ui-plugins/*/node_modules/
 
 # 排除构建产物
 dsh-ui-plugins/*/dist/
+
+# 排除专家模式消息总线运行期产物（bus.py 动态生成，非源码）
+.expert-mode/comm/.seq
+.expert-mode/comm/archive/
+.expert-mode/comm/mailboxes/
+.expert-mode/comm/logs/
