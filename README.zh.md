@@ -101,10 +101,35 @@
 
 ## 📦 安装
 
+### 方式 A：npm（待发布）
+
 ```bash
 # 在 DSH 工作区中执行
 dsh plugin add @deepseek-ai/dsh-expert-mode
 ```
+
+> **注意**：该 npm 包尚未发布。在发布前请使用下面的方式 B。
+
+### 方式 B：从 GitHub 手动安装（当前推荐）
+
+克隆仓库，然后将预设拷贝到 DSH 的 agent-presets 目录：
+
+```bash
+# 1. 克隆到任意位置
+git clone https://github.com/Asher-2000/dsh-expert-mode.git
+cd dsh-expert-mode
+
+# 2. 将预设拷贝到 DSH 的 agent-presets 目录
+mkdir -p ~/.dsh/.agent-presets/expert-mode
+cp -r agent.cordis.yml preset.yml cordis.patch.yml ~/.dsh/.agent-presets/expert-mode/
+# 如需完整方法论文档（methods/、experts/、comm/ 消息总线），拷贝整个目录：
+# cp -r .expert-mode ~/.dsh/.agent-presets/expert-mode/
+
+# 3. 重启 DSH web，然后在预设选择器中选择「专家模式」
+dsh web
+```
+
+> **说明**：`~/.dsh/.agent-presets/` 是 DSH 的预设发现目录，每个子目录对应一个预设；预设名称取自 `preset.yml` 的 `name` 字段。
 
 然后在工作区预设选择器中选择 **「专家模式」**。
 

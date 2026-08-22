@@ -1,5 +1,5 @@
 # dsh-expert-mode plugin registration
-# The agent-plane composition (persona + 11 expert subagent tools) lives in
+# The agent-plane composition (persona + 16 expert subagent tools) lives in
 # agent.cordis.yml; preset metadata lives in preset.yml. This patch registers
 # the plugin so `dsh plugin add` can mount it.
 - insert:

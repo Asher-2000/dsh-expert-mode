@@ -101,10 +101,35 @@ No custom prompts to write. No multi-config to maintain. **Just install and use.
 
 ## 📦 Installation
 
+### Option A: npm (once published)
+
 ```bash
 # In DSH workspace
 dsh plugin add @deepseek-ai/dsh-expert-mode
 ```
+
+> **Note**: The npm package is not published yet. Use Option B below until it is available.
+
+### Option B: Manual install from GitHub (current)
+
+Clone the repository, then copy the preset into DSH's agent-presets directory:
+
+```bash
+# 1. Clone anywhere
+git clone https://github.com/Asher-2000/dsh-expert-mode.git
+cd dsh-expert-mode
+
+# 2. Copy the preset into DSH's agent-presets directory
+mkdir -p ~/.dsh/.agent-presets/expert-mode
+cp -r agent.cordis.yml preset.yml cordis.patch.yml ~/.dsh/.agent-presets/expert-mode/
+# If you want the full methodology docs (methods/, experts/, comm/ bus), copy the whole tree:
+# cp -r .expert-mode ~/.dsh/.agent-presets/expert-mode/
+
+# 3. Restart DSH web, then select "专家模式" in the workspace preset selector
+dsh web
+```
+
+> **Note**: `~/.dsh/.agent-presets/` is DSH's preset discovery directory. Each subdirectory = one preset. The preset name comes from `preset.yml`'s `name` field.
 
 Then select **"专家模式"** in the workspace preset selector.
 
