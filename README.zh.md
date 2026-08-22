@@ -101,16 +101,16 @@
 
 ## 📦 安装
 
-### 方式 A：npm（待发布）
+### 方式 A：`dsh plugin add`（仅保证不崩，❌ 不会激活专家模式）
 
 ```bash
 # 在 DSH 工作区中执行
-dsh plugin add @deepseek-ai/dsh-expert-mode
+dsh plugin add github:Asher-2000/dsh-expert-mode
 ```
 
-> **注意**：该 npm 包尚未发布。在发布前请使用下面的方式 B。
+> ⚠️ **重要**：本插件是 **agent-preset 型插件**，不是 Cordis 服务插件。`dsh plugin add` 只保证 bundle 加载不崩溃，**并不会把专家模式装进你的会话**——预设只能通过下面的方式 B 挂载到 `~/.dsh/.agent-presets/`。请直接使用方式 B。此入口仅为兼容性占位。
 
-### 方式 B：从 GitHub 手动安装（当前推荐）
+### 方式 B：从 GitHub 手动安装（✅ 唯一有效方式）
 
 克隆仓库，然后将预设拷贝到 DSH 的 agent-presets 目录：
 

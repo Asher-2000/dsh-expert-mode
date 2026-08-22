@@ -12,7 +12,9 @@
     "subagent",
     "dsh-plugin"
   ],
+  "main": "index.js",
   "files": [
+    "index.js",
     "cordis.patch.yml",
     "agent.cordis.yml",
     "preset.yml",

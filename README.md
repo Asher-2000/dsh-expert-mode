@@ -101,14 +101,14 @@ No custom prompts to write. No multi-config to maintain. **Just install and use.
 
 ## 📦 Installation
 
-### Option A: npm (once published)
+### Option A: `dsh plugin add` (won't crash, but ❌ does NOT activate expert mode)
 
 ```bash
 # In DSH workspace
-dsh plugin add @deepseek-ai/dsh-expert-mode
+dsh plugin add github:Asher-2000/dsh-expert-mode
 ```
 
-> **Note**: The npm package is not published yet. Use Option B below until it is available.
+> ⚠️ **Important**: this is an **agent-preset plugin**, not a Cordis service plugin. `dsh plugin add` only guarantees the bundle loads without crashing — it does **not** mount expert mode into your sessions. The preset only works via Option B (`~/.dsh/.agent-presets/`). Use Option B. This entry is a compatibility placeholder only.
 
 ### Option B: Manual install from GitHub (current)
 
