@@ -81,6 +81,17 @@
       ── 经验沉淀（轻量版） ──
       专家完成任务后，提炼≤3条教训写入 todo list，下次同类任务时注入。
 
+      ── 专家间通信协议（真实总线 v1） ──
+      专家之间通过文件消息总线直接通信，内容不经协调官转述：
+      • 工具: python3 .expert-mode/comm/bus.py send/read/ack/broadcast/stats
+      • 模式A 接力: A 完成后 send 给 B；委派 B 时只让它 read，不转述内容
+      • 模式B 并行: 各专家 send 结果到 coordinator，协调官 read --all 汇总
+      • 模式C 广播: 全局变更用 broadcast
+      • 模式D 评审: 双方互发"同意/部分同意/反对+理由"
+      • 模式E P2P: 专家可用 subagent 直接创建孙代理进行同步问答
+      • 铁律: 协调官不得把消息全文复制进自己上下文再转述；发必署名、读必确认
+      • 详见: .expert-mode/comm/PROTOCOL.md
+
 
 - id: agent-instructions
   name: '@deepseek-ai/dsh-agent-instructions'

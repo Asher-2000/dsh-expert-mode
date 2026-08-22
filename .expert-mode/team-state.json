@@ -48,7 +48,7 @@
       "assignee": "协调官",
       "status": "completed",
       "dependencies": ["t5"],
-      "output_ref": ".expert-mode/reviews/2026-08-18-data-report-component-review.md"
+      "output_ref": "交叉评审记录（2026-08-18，历史归档）"
     },
     {
       "id": "t7",
@@ -57,14 +57,45 @@
       "status": "completed",
       "dependencies": ["t6"],
       "output_ref": ".expert-mode/experts/*/lessons.md"
+    },
+    {
+      "id": "t8",
+      "name": "实现专家间通信基础设施（消息总线 bus.py）",
+      "assignee": "协调官",
+      "status": "completed",
+      "dependencies": [],
+      "output_ref": ".expert-mode/comm/bus.py + PROTOCOL.md"
+    },
+    {
+      "id": "t9",
+      "name": "验证专家间直接通信（总线接力端到端）",
+      "assignee": "data-analyst + frontend-dev",
+      "status": "completed",
+      "dependencies": ["t8"],
+      "output_ref": "data-analyst →(总线)→ frontend-dev → 可视化 HTML（内容零经协调官）"
+    },
+    {
+      "id": "t10",
+      "name": "验证 P2P 代理直连（专家创建孙代理）",
+      "assignee": "协调官",
+      "status": "completed",
+      "dependencies": [],
+      "output_ref": "专家直接创建财务孙代理，返回正确计算，全程无协调官中转"
+    },
+    {
+      "id": "t11",
+      "name": "沉淀通信协议与经验",
+      "assignee": "协调官",
+      "status": "completed",
+      "dependencies": ["t9", "t10"],
+      "output_ref": ".expert-mode/comm/PROTOCOL.md + experts/coordinator/lessons.md"
     }
   ],
-  "completed_tasks": 7,
-  "total_tasks": 7,
+  "completed_tasks": 11,
+  "total_tasks": 11,
   "progress": "100%",
   "next_actions": [
     "验证专家持久化功能",
-    "测试专家间直接通信",
     "测试Token预算控制",
     "测试渐进式披露"
   ]

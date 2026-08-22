@@ -92,7 +92,7 @@ No custom prompts to write. No multi-config to maintain. **Just install and use.
 | 🔄 **Five-Anchor Constraint** | Prevents topic drift with per-turn self-check |
 | 🤝 **Cross Review** | High-risk tasks get multi-expert independent review |
 | 💾 **Experience Pool** | Lessons learned are saved and injected next time |
-| 💬 **Subagent Communication** | Experts can communicate via send_message (continuable mode) |
+| 💬 **Inter-Expert Bus** | File-based message bus (bus.py): experts send/read directly, zero coordinator relay, P2P capable |
 | ⚡ **Fault Recovery** | Auto-retry on timeout, strategy switch on failure |
 | 📉 **Progressive Disclosure** | Methodology injected on-demand, 28% token savings |
 | 🌐 **Bilingual** | Complete EN/ZH documentation |
@@ -156,14 +156,47 @@ Coordinator:
 
 ---
 
+
+### 💬 Inter-Expert Communication Bus (v0.8.0)
+
+```
+┌──────────────────────────────────────────────────────────────┐
+│                 File Message Bus (comm/bus.py)                │
+│   .expert-mode/comm/mailboxes/<expert>/*.msg                 │
+├──────────────────────────────────────────────────────────────┤
+│                                                              │
+│   data-analyst ──send──▶ frontend-dev   (direct, async)      │
+│   copywriter   ──send──▶ social-media  (direct, async)       │
+│   coordinator  ──broadcast──▶ all experts (global sync)      │
+│   expert A     ──P2P subagent──▶ expert B  (synchronous)     │
+│                                                              │
+│   • Zero relay: content flows between experts, NOT through   │
+│     coordinator context                                     │
+│   • Durable: every message persisted as .msg file            │
+│   • Auditable: full log at comm/logs/bus.log                 │
+│   • Commands: send / read / ack / broadcast / stats          │
+└──────────────────────────────────────────────────────────────┘
+```
+
+**Communication Modes**:
+| Mode | How | Use case |
+|------|-----|----------|
+| **A. Relay** | Expert A sends result → Expert B reads | Sequential collaboration |
+| **B. Parallel** | Experts send results to coordinator → read --all | Independent collection |
+| **C. Broadcast** | One message → all mailboxes | Global state changes |
+| **D. Review** | Experts send "agree/partial/disagree + reason" | Cross review |
+| **E. P2P** | Expert spawns subagent for direct Q&A | Synchronous clarification |
+
+---
+
 ## 📚 Documentation
 
 | Document | Description |
 |----------|-------------|
-| [User Guide](docs/user-guide.md) | Installation and usage |
-| [Expert Methods](.expert-mode/experts/) | Detailed methodology for each expert |
-| [Architecture](docs/architecture.md) | System design details |
-| [Changelog](CHANGELOG.md) | Version history |
+| [Communication Protocol](.expert-mode/comm/PROTOCOL.md) | Inter-expert message bus protocol v1 |
+| [Expert Methods](.expert-mode/methods/) | 16 expert methodology docs |
+| [Experience Pool](.expert-mode/experts/) | Lessons learned per expert |
+| [README.zh.md](README.zh.md) | 中文文档 |
 
 ---
 
