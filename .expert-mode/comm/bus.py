@@ -54,6 +54,12 @@ AGENTS = {
     "security": "安全",
     "qa": "测试",
     "database": "数据库",
+    # 艺术家模式（v0.4 新增，与专家模式平级）：生成/评审两段分离
+    "artist": "艺术家设计师",
+    "artist-critic": "艺术家评审师",
+    # 专家模式补充（2026-08-24）：生图短视频 / 后端开发
+    "media-creator": "生图短视频",
+    "backend-dev": "后端开发",
 }
 
 VALID_AGENT = re.compile(r"^[a-z0-9-]+$")

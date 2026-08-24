@@ -1,8 +1,8 @@
 # 🧠 DSH 专家模式
 
 <p align="center">
-  <strong>首席协调官 + 16 位领域专家 — 全栈多智能体团队</strong><br/>
-  <em>1 Coordinator + 16 Experts — Full-Stack Multi-Agent Team</em>
+  <strong>首席协调官 + 17 位领域专家 — 全栈多智能体团队</strong><br/>
+  <em>1 Coordinator + 17 Experts — Full-Stack Multi-Agent Team</em>
 </p>
 
 <p align="center">
@@ -48,7 +48,7 @@
 
 ---
 
-## 🧩 16 位专家
+## 🧩 17 位专家
 
 ### 🎯 全栈核心（6位）
 
@@ -75,6 +75,7 @@
 |------|------|------|
 | 📋 产品经理 | `expert_product_manager` | PRD、需求分析、竞品调研 |
 | ✍️ 文案专家 | `expert_copywriter` | 营销文案、内容创作 |
+| 🎬 生图短视频 | `expert_media_creator` | 分镜、生图、AI 视频、成片 |
 | ⚖️ 法务审核 | `expert_legal_review` | 合同审核、法律风险 |
 | 📱 社交运营 | `expert_social_media` | 多平台分发、账号管理 |
 | 🚀 增长黑客 | `expert_growth` | 增长策略、A/B 测试 |

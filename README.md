@@ -1,8 +1,8 @@
 # 🧠 DSH Expert Mode
 
 <p align="center">
-  <strong>1 Coordinator + 16 Experts — Full-Stack Multi-Agent Team</strong><br/>
-  <em>首席协调官 + 16 位领域专家 — 全栈多智能体团队</em>
+  <strong>1 Coordinator + 17 Experts — Full-Stack Multi-Agent Team</strong><br/>
+  <em>首席协调官 + 17 位领域专家 — 全栈多智能体团队</em>
 </p>
 
 <p align="center">
@@ -48,7 +48,7 @@ No custom prompts to write. No multi-config to maintain. **Just install and use.
 
 ---
 
-## 🧩 16 Experts
+## 🧩 17 Experts
 
 ### 🎯 Full-Stack Core (6)
 
@@ -75,6 +75,7 @@ No custom prompts to write. No multi-config to maintain. **Just install and use.
 |--------|------|--------|
 | 📋 Product Manager | `expert_product_manager` | PRD, requirements, competitor research |
 | ✍️ Copywriter | `expert_copywriter` | Marketing copy, content creation |
+| 🎬 Media Creator | `expert_media_creator` | Storyboard, AI image, AI video, final cut |
 | ⚖️ Legal Review | `expert_legal_review` | Contract review, legal risk |
 | 📱 Social Media | `expert_social_media` | Multi-platform distribution |
 | 🚀 Growth Hacker | `expert_growth` | Growth strategy, A/B testing |
