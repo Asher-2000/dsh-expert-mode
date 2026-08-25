@@ -76,6 +76,23 @@ curl -sS -x http://<PROXY_ADDR> "https://apihub.agnes-ai.com/agnesapi?video_id=<
 - **生视频排队 >5 分钟**：检查接口（video_id 查询、端点、mode 参数）——用户提示「>5 分钟大概率接口搞错了」；确属服务端慢则先交付分镜 + 关键帧图 + video_id，稍后凭 video_id 续查
 - **内容不合格**：定位到具体镜头/图片重生成（换 seed），不整体重跑；连续 2 次不合格 → 降级交付分镜脚本
 
+## 多模态目检补充链路（2026-08-25 实测）：OpenCode Zen mimo-v2.5
+当当前模型不支持读图（read_image 不可用，如 deepseek-v4-flash）时，可调用 OpenCode Zen/Go 多模态模型做画面语义目检（手/脸/军装/反差/水印断言），补上 Mode B 无法覆盖的观感项。**按需调用**：只在成片/关键帧验收时触发，不占用 Agnes 生图/生视频配额与 key。
+
+- **凭据**：`<OPENCODE_AUTH_FILE>`（`{"opencode":{"type":"api","key":"sk-..."}}`，0600；可用 `opencode auth login` 或直接写入）；脚本从该文件读 key，**禁止回显**
+- **端点（订阅优先，2026-08-25 修正）**：**OpenCode Go 订阅 → `https://opencode.ai/zen/go/v1/chat/completions`**（models.dev provider id=`opencode-go`）；仅 Zen 预付费 key 时才用 `https://opencode.ai/zen/v1`（按 credits 扣费）。**「Go 订阅 key 打 Zen 端点必 401 CreditsError 'Insufficient balance'」是头号排查项——用户说『订阅有余量』时先切 /zen/go/v1 再谈充值**
+- **模型 id**：Go 订阅用 **`mimo-v2.5`**（订阅涵盖，图像+音频+视频 omni，100 万上下文；可用环境变量 OC_MODEL 切换同套餐图像模型：kimi-k2.6/qwen3.7-plus/minimax-m3/grok-4.5/deepseek-v4-flash-vision-exp）；免费档 `mimo-v2.5-free` 仅为无订阅时的次选（约 1 RPM 限流）
+- **mimo-v2.5 行为特征（实测 2026-08-25）**：文本请求快（秒级）；**图像请求慢**——带图超 120s 常见，批量目检 curl 超时须放到 300s；偶发 429/FreeUsageLimitError「Rate limit exceeded」是临时限流，冷却 60s+ 后恢复；同套餐图像模型实测连通性：minimax-m3/qwen3.7-plus/deepseek-v4-flash-vision-exp=200，kimi-k2.6/grok-4.5=503，gpt-5.6-luna=500（mimo-v2.5 不可用时按此选备用）
+- **两条硬约束（实测 2026-08-25）**：
+  1. **必须走代理** `-x <PROXY_ADDR>`：直连（或环境 NO_PROXY 含 opencode.ai 时）上游 503「Endpoint is unavailable」；常见环境 `NO_PROXY` 默认含 `opencode.ai`，直接调用须显式 `-x` 或覆盖 `NO_PROXY`
+  2. **必须非流式**：`stream=true` 上游 503；省略 stream 字段 → 200，约 30-40s/帧（每帧 1-2MB base64 请求体 OK）
+- **带图请求**：OpenAI content 数组——`{"role":"user","content":[{"type":"text","text":"<质检清单>"},{"type":"image_url","image_url":{"url":"data:image/png;base64,<b64>"}}]}`；mimo 是 reasoning 模型，`max_tokens` 建议 1024-2048（过小会截断在推理段，content 为 null）
+- **响应**：`choices[0].message.content` = 结论（中文逐项【通过/不通过】+理由），`message.reasoning` = 思考过程；判定以 content 为准（finish_reason=stop 为完整）
+- **一键脚本**：`inspect_frames.sh <img1> <img2> ...` → 逐帧质检（Go 订阅端点 + mimo-v2.5，key 读 auth.json、代理+非流式、非 200 冷却 30s 重试 ≤3 次；`OC_MODEL` 可换模型），输出 `output/media/<task>/inspection/results.jsonl`，末尾打印 ALL-PASS/FAIL 汇总
+- **限流**：免费档约 1 RPM，连续请求会 429；批量目检建议帧间隔 ≥60s，失败按 30-60s 冷却重试（脚本已内置冷却重试，必要时调大间隔）
+- **注意**：opencode CLI run 模式对 mimo **不可用**——CLI 强制流式（上游 503 → 包装成 "UnknownError"）；且 run 的 message 位置参数会被当文件解析（报 File not found），须用 `--command`。mimo 目检一律走 curl/脚本直连 zen API。若日后 CLI 可用：`opencode run -m opencode/mimo-v2.5-free --command "<prompt>" -f <img>` 且 NO_PROXY 须去掉 opencode.ai
+- **验收衔接**：模式 B 技术指标（规格/亮度/水印/帧差）+ mimo 语义目检（手/脸/军装/反差）双保险；mimo 判定结果记入 prompts.json，替代「待人工目检」占位（模式 A 优先于一切目检结论）
+
 ## 交付前验收清单（逐条自检）
 
 ### 模式 A：视觉模型可用时（优先执行）
@@ -89,6 +106,7 @@ curl -sS -x http://<PROXY_ADDR> "https://apihub.agnes-ai.com/agnesapi?video_id=<
 - [ ] **技术指标替代**：字幕存在性用「白色像素统计」（ffmpeg 抽帧 + 纯 Python 统计 R/G/B>200 像素数，每段字幕区域有数千以上白像素）；规格用 ffprobe（时长/分辨率/帧率/编码）
 - [ ] **转场自检**：抽相邻帧对比亮度差（<12% 无跳变/黑屏，2026-08-24 实测方法）
 - [ ] **形变/跳变**：技术指标无法判断——需标注「技术指标正常，建议人工过目确认构图形变」
+- [ ] **mimo 语义目检（可选补充）**：模式 B 下运行 `inspect_frames.sh`（见「多模态目检补充链路」）对关键帧/抽帧逐项断言（手/脸/军装/反差/水印），结果记入 prompts.json；模式 A 不可用时的观感项以此代替「待人工目检」占位
 - [ ] 技术指标结果记入 prompts.json（白像素数/亮度差/ffprobe 规格）
 
 ### 通用项（两种模式均执行）
@@ -106,12 +124,12 @@ curl -sS -x http://<PROXY_ADDR> "https://apihub.agnes-ai.com/agnesapi?video_id=<
 ## 平台适配速查
 - 抖音 9:16 1080×1920；小红书 3:4/1:1；B站 16:9；信息流 1:1/9:16
 - 15s 视频 3-5 镜头、单镜头 3-5s、前 2s 出钩子
-- 重要文字（标题/价格）一律后期叠加，不在生图里生成（易乱码）
+- **文字策略（2026-08-25 修订）**：生图阶段一律禁止文字（易乱码）；**后期字幕/标题默认不主动添加**——仅在用户明确要求时才叠加（避免遮挡画面、破坏电影感、风格漂移）。
 
 ## 通用经验
 - 好成片 70% 在分镜与提示词，先想清楚画面再调用模型
 - 一致性比单张惊艳更重要，系列素材统一风格词；seed 必记录，返工可复现
-- 模型产出的文字易乱码，重要文字一律后期加
+- 模型产出的文字易乱码，生图阶段一律禁止；后期字幕/标题遵循「**不主动添加，用户要求才加**」（2026-08-25 修订）
 - 合规红线：不生成真实人物肖像冒充（尤其公众人物）、不生成受版权保护的 IP/商标角色、不生成违禁内容；商用前确认模型服务条款允许商用
 
 ## 10s 短视频帧数分配（2026-08-24 实测方案）
