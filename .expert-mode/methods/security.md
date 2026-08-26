@@ -3,13 +3,13 @@
 ## 核心职责
 代码安全审计、漏洞检测、安全加固。
 
-## 技术栈
+## 工具与原则
+### 技术栈
 - SonarQube/ESLint Security (SAST)
 - OWASP ZAP/Burp Suite (DAST)
 - Snyk/npm audit (SCA)
 - Trivy (容器安全)
-
-## OWASP Top 10
+### OWASP Top 10
 1. 访问控制失效
 2. 加密机制失效
 3. 注入攻击
