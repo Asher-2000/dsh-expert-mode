@@ -11,9 +11,10 @@
   1. **必须走代理** `-x <PROXY_ADDR>`：直连（或环境 NO_PROXY 含 opencode.ai 时）上游 503「Endpoint is unavailable」；常见环境 `NO_PROXY` 默认含 `opencode.ai`，直接调用须显式 `-x` 或覆盖 `NO_PROXY`
   2. **必须非流式**：`stream=true` 上游 503；省略 stream 字段 → 200，约 30-40s/帧（每帧 1-2MB base64 请求体 OK）
 - **带图请求**：OpenAI content 数组——`{"role":"user","content":[{"type":"text","text":"<质检清单>"},{"type":"image_url","image_url":{"url":"data:image/png;base64,<b64>"}}]}`；mimo 是 reasoning 模型，`max_tokens` 建议 1024-2048（过小会截断在推理段，content 为 null）
-- **响应**：`choices[0].message.content` = 结论（中文逐项【通过/不通过】+理由），`message.reasoning` = 思考过程；判定以 content 为准（finish_reason=stop 为完整）
-- **一键脚本**：`inspect_frames.sh <img1> <img2> ...` → 逐帧质检（Go 订阅端点 + mimo-v2.5，key 读 auth.json、代理+非流式、非 200 冷却 30s 重试 ≤3 次；`OC_MODEL` 可换模型），输出 `output/media/<task>/inspection/results.jsonl`，末尾打印 ALL-PASS/FAIL 汇总
-- **限流**：免费档约 1 RPM，连续请求会 429；批量目检建议帧间隔 ≥60s，失败按 30-60s 冷却重试（脚本已内置冷却重试，必要时调大间隔）
+- **响应**：`choices[0].message.content` = 结论（中文逐项【通过/不通过】+理由），`message.reasoning` = 思考过程；判定以 content 为准（**finish_reason=stop 为完整；`finish=length` 为截断——即使 content 非 null 也可能半截，应判无效并以 max_tokens≥2048 定点补测**，2026-08-26 沉香任务实测）
+- **一键脚本**：`inspect_frames.sh <img1> <img2> ...` → 逐帧质检（Go 订阅端点 + mimo-v2.5，key 读 auth.json、代理+非流式、非 200 冷却 30s 重试 ≤3 次、临时文件按 PID 隔离、并发安全；环境变量：`OC_MODEL` 换模型 / `OC_CONCURRENCY` 并发数默认 2（Go 订阅 2-3 稳妥）/ `OC_MAXTOKENS` 默认 1024 / `OC_OUT_DIR` 指定任务目检目录），输出 `OC_OUT_DIR/results.jsonl`，末尾打印 ALL-PASS/FAIL 汇总
+- **目检抽帧策略（2026-08-26 优化）**：先只抽 2-3 个关键时间点（起/中/尾）；**时间点必须对齐剧情节点**（人物出场/高潮/定格各一个）——否则「主角此时未现身」会被误判为缺陷（如沉香 0s 无三圣母属设计内，不算不通过）；**高要求任务用任务专属清单**（通用 6 项 + 任务要素项：主角形象/法器/特效/氛围），比通用清单更能抓住问题（示例：`inspect_frames_cxp.sh`）
+- **限流**：免费档约 1 RPM，连续请求会 429；批量目检建议帧间隔 ≥60s，失败按 30-60s 冷却重试（脚本已内置冷却重试，必要时调大间隔）；Go 订阅实测并发 2-3 无 429，可安心开并发
 - **注意**：opencode CLI run 模式对 mimo **不可用**——CLI 强制流式（上游 503 → 包装成 "UnknownError"）；且 run 的 message 位置参数会被当文件解析（报 File not found），须用 `--command`。mimo 目检一律走 curl/脚本直连 zen API。若日后 CLI 可用：`opencode run -m opencode/mimo-v2.5-free --command "<prompt>" -f <img>` 且 NO_PROXY 须去掉 opencode.ai
 - **验收衔接**：模式 B 技术指标（规格/亮度/水印/帧差）+ mimo 语义目检（手/脸/军装/反差）双保险；mimo 判定结果记入 prompts.json，替代「待人工目检」占位（模式 A 优先于一切目检结论）
 
