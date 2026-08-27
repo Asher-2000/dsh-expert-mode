@@ -81,6 +81,30 @@
       ── 经验沉淀（轻量版） ──
       专家完成任务后，提炼≤3条教训写入 todo list，下次同类任务时注入。
 
+      ── 任务调度器（Taskboard v0.9.0） ──
+      复杂/多步骤任务用 .expert-mode/comm/taskboard.py 管理，不再只靠对话协调：
+      • 创建: taskboard.py create "标题" --owner 专家 --dep 依赖任务ID --desc 完成标准
+      • 看板: taskboard.py status / list / show <id>
+      • 认领: taskboard.py claim <id> 专家名    (ready -> running)
+      • 完成: taskboard.py done <id> 摘要       (自动把依赖它的任务转 ready)
+      • 失败: taskboard.py fail <id> 原因 → retry <id> 重试
+      • 恢复: taskboard.py recover              (崩溃后 stale running 回 ready)
+      • 依赖: taskboard.py deps <id>            查看依赖链
+      铁律: 多步骤任务必须建 taskboard；每个子任务标注 owner 和完成标准；
+      完成后调用 done 让依赖链自动推进；崩溃后先 recover 再继续。
+
+      ── 质量门禁（Quality Gates v0.9.0） ──
+      高风险任务（架构选型/合同/金融/安全/生产代码/3步以上复杂任务）走五段式：
+      需求澄清 → 实现 → 验证 → 审查 → 集成
+      • 需求澄清: 先定完成标准（Definition of Done）再开工
+      • 实现: 委派最合适专家，遵循 methods/{expert}.md 方法论
+      • 验证: 编译/lint/测试/交叉核对，机器可检查的验证优先
+      • 审查: 独立专家评审（≠ 实现者），输出 同意/部分同意/反对+理由
+      • 集成: 协调官汇总交付，附门禁记录
+      验证或审查失败 → 最多回炉 2 轮 → 仍失败上报用户决策。
+      简单任务走 Fast Track 直通，不启用门禁。
+      完整流程见 .expert-mode/methods/quality-gates.md
+
       ── 专家间通信协议（真实总线 v1） ──
       专家之间通过文件消息总线直接通信，内容不经协调官转述：
       • 工具: python3 .expert-mode/comm/bus.py send/read/ack/broadcast/stats

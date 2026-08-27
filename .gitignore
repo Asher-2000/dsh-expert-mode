@@ -45,3 +45,6 @@ dsh-ui-plugins/*/dist/
 .expert-mode/comm/archive/
 .expert-mode/comm/mailboxes/
 .expert-mode/comm/logs/
+# 任务调度器运行期产物（taskboard.py 动态生成，非源码）
+.expert-mode/comm/tasks/
+.expert-mode/comm/tasks_done/

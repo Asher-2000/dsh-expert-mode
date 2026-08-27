@@ -94,6 +94,8 @@ No custom prompts to write. No multi-config to maintain. **Just install and use.
 | 🤝 **Cross Review** | High-risk tasks get multi-expert independent review |
 | 💾 **Experience Pool** | Lessons learned are saved and injected next time |
 | 💬 **Inter-Expert Bus** | File-based message bus (bus.py): experts send/read directly, zero coordinator relay, P2P capable |
+| 📋 **Taskboard** | File-system task scheduler (taskboard.py): pending/ready/running/done/failed state machine, dependency DAG, retry, crash recovery — real scheduling, not just chat coordination |
+| 🚦 **Quality Gates** | 5-stage pipeline for high-risk tasks: requirement clarity → implementation → verification → review → integration. Independent-expert review with 2-round rework limit |
 | ⚡ **Fault Recovery** | Auto-retry on timeout, strategy switch on failure |
 | 📉 **Progressive Disclosure** | Methodology injected on-demand, 28% token savings |
 | 🌐 **Bilingual** | Complete EN/ZH documentation |
