@@ -104,16 +104,44 @@
 
 ## 📦 安装
 
-### 方式 A：`dsh plugin add`（仅保证不崩，❌ 不会激活专家模式）
+### 方式 A：npm 一键安装（推荐）🚀
+
+本包已发布到 npm：[`dsh-expert-mode`](https://www.npmjs.com/package/dsh-expert-mode)。可用 DSH 插件管理器或 npm 直接安装：
 
 ```bash
-# 在 DSH 工作区中执行
-dsh plugin add github:Asher-2000/dsh-expert-mode
+# 在 DSH 工作区 — 通过插件管理器
+dsh plugin add dsh-expert-mode
+
+# ...或直接安装 npm 包
+npm install dsh-expert-mode
 ```
 
-> ⚠️ **重要**：本插件是 **agent-preset 型插件**，不是 Cordis 服务插件。`dsh plugin add` 只保证 bundle 加载不崩溃，**并不会把专家模式装进你的会话**——预设只能通过下面的方式 B 挂载到 `~/.dsh/.agent-presets/`。请直接使用方式 B。此入口仅为兼容性占位。
+> ℹ️ **agent-preset 型插件说明**：本插件是 **agent-preset 型插件**，不是 Cordis 服务插件。安装 npm 包只是把所有文件拉进 `node_modules`——预设要**激活**还需要把文件挂载进 DSH 的预设发现目录。下方"方式 B"一步搞定。
 
-### 方式 B：从 GitHub 手动安装（✅ 唯一有效方式）
+### 方式 B：一键挂载预设（推荐激活方式）
+
+安装 npm 包后，把预设挂载到 DSH 的预设发现目录：
+
+```bash
+# 1. 找到 npm 包的安装位置
+#    （通常在 DSH 工作区的 ./node_modules/dsh-expert-mode，或全局安装位置）
+
+# 2. 把预设挂载到 DSH 的 agent-presets 目录
+mkdir -p ~/.dsh/.agent-presets/expert-mode
+cp -r node_modules/dsh-expert-mode/agent.cordis.yml \
+      node_modules/dsh-expert-mode/preset.yml \
+      node_modules/dsh-expert-mode/cordis.patch.yml \
+      ~/.dsh/.agent-presets/expert-mode/
+# 如需完整方法论文档（methods/、experts/、comm/ 消息总线、taskboard），拷贝整个目录：
+# cp -r node_modules/dsh-expert-mode/.expert-mode ~/.dsh/.agent-presets/expert-mode/
+
+# 3. 重启 DSH web，然后在预设选择器中选择「专家模式」
+dsh web
+```
+
+> **说明**：`~/.dsh/.agent-presets/` 是 DSH 的预设发现目录，每个子目录对应一个预设；预设名称取自 `preset.yml` 的 `name` 字段。
+
+### 方式 C：从 GitHub 手动安装
 
 克隆仓库，然后将预设拷贝到 DSH 的 agent-presets 目录：
 

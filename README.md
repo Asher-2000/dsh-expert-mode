@@ -104,16 +104,44 @@ No custom prompts to write. No multi-config to maintain. **Just install and use.
 
 ## 📦 Installation
 
-### Option A: `dsh plugin add` (won't crash, but ❌ does NOT activate expert mode)
+### Option A: npm one-click (recommended) 🚀
+
+The package is published on npm as [`dsh-expert-mode`](https://www.npmjs.com/package/dsh-expert-mode). You can install it with the DSH plugin manager or npm directly:
 
 ```bash
-# In DSH workspace
-dsh plugin add github:Asher-2000/dsh-expert-mode
+# In DSH workspace — via plugin manager
+dsh plugin add dsh-expert-mode
+
+# ...or install the npm package directly
+npm install dsh-expert-mode
 ```
 
-> ⚠️ **Important**: this is an **agent-preset plugin**, not a Cordis service plugin. `dsh plugin add` only guarantees the bundle loads without crashing — it does **not** mount expert mode into your sessions. The preset only works via Option B (`~/.dsh/.agent-presets/`). Use Option B. This entry is a compatibility placeholder only.
+> ℹ️ **How agent-presets work**: this is an **agent-preset plugin**, not a Cordis service plugin. Installing the npm package pulls all files into your `node_modules` — but the preset only **activates** once its files are mounted into DSH's preset discovery directory. The preset ships a copy step (below) that makes this one command.
 
-### Option B: Manual install from GitHub (current)
+### Option B: One-command preset mount (recommended for activation)
+
+After installing the npm package, mount the preset into DSH's preset discovery directory:
+
+```bash
+# 1. Find where npm put the package
+#    (usually ./node_modules/dsh-expert-mode in your DSH workspace, or globally)
+
+# 2. Mount the preset into DSH's agent-presets directory
+mkdir -p ~/.dsh/.agent-presets/expert-mode
+cp -r node_modules/dsh-expert-mode/agent.cordis.yml \
+      node_modules/dsh-expert-mode/preset.yml \
+      node_modules/dsh-expert-mode/cordis.patch.yml \
+      ~/.dsh/.agent-presets/expert-mode/
+# If you want the full methodology docs (methods/, experts/, comm/ bus, taskboard):
+# cp -r node_modules/dsh-expert-mode/.expert-mode ~/.dsh/.agent-presets/expert-mode/
+
+# 3. Restart DSH web, then select "专家模式" in the workspace preset selector
+dsh web
+```
+
+> **Note**: `~/.dsh/.agent-presets/` is DSH's preset discovery directory. Each subdirectory = one preset. The preset name comes from `preset.yml`'s `name` field.
+
+### Option C: Manual install from GitHub
 
 Clone the repository, then copy the preset into DSH's agent-presets directory:
 
