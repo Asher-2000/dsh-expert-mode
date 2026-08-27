@@ -1,6 +1,6 @@
 {
   "name": "dsh-expert-mode",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "description": "DSH agent preset: chief coordinator + 17 domain-expert subagents with taskboard scheduling, quality gates, and real inter-expert communication bus (专家模式)",
   "license": "MIT",
   "keywords": [
