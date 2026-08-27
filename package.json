@@ -1,6 +1,6 @@
 {
   "name": "dsh-expert-mode",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "DSH agent preset: chief coordinator + 17 domain-expert subagents with taskboard scheduling, quality gates, and real inter-expert communication bus (专家模式)",
   "license": "MIT",
   "keywords": [
@@ -18,6 +18,12 @@
     "cordis.patch.yml",
     "agent.cordis.yml",
     "preset.yml",
+    ".expert-mode/comm/bus.py",
+    ".expert-mode/comm/taskboard.py",
+    ".expert-mode/comm/PROTOCOL.md",
+    ".expert-mode/experts/",
+    ".expert-mode/methods/",
+    ".expert-mode/reviews/",
     "README.md",
     "README.zh.md",
     "LICENSE"
