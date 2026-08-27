@@ -6,6 +6,17 @@
 </p>
 
 <p align="center">
+  <img src="assets/main-ui.jpg" alt="DSH 专家模式主界面" width="600" />
+</p>
+
+<p align="center">
+  <a href="https://www.npmjs.com/package/dsh-expert-mode"><img src="https://img.shields.io/npm/v/dsh-expert-mode?style=flat-square&color=5B4CF0" alt="npm version"></a>
+  <a href="https://www.npmjs.com/package/dsh-expert-mode"><img src="https://img.shields.io/npm/dm/dsh-expert-mode?style=flat-square&color=5B4CF0" alt="npm downloads"></a>
+  <a href="https://dshfind.com/en/plugins/Asher-2000/dsh-expert-mode"><img src="https://dshfind.com/api/badge/Asher-2000/dsh-expert-mode" alt="dshfind"></a>
+  <a href="https://dshfind.com/en/plugins/Asher-2000/dsh-expert-mode"><img src="https://dshfind.com/api/card/Asher-2000/dsh-expert-mode" alt="dshfind card" width="220"></a>
+</p>
+
+<p align="center">
   <a href="https://github.com/topics/dsh-plugin"><img src="https://img.shields.io/badge/dsh--plugin-ready-478CBF?logo=deepseek&logoColor=white" alt="dsh-plugin"></a>
   <a href="https://github.com/awesome-dsh-plugin/awesome-dsh-plugin"><img src="https://img.shields.io/badge/awesome--dsh--plugin-featured-1a56db?logo=deepseek&logoColor=white" alt="Featured in Awesome DSH Plugin"></a>
   <a href="https://github.com/Asher-2000/dsh-expert-mode/releases"><img src="https://img.shields.io/github/v/release/Asher-2000/dsh-expert-mode?label=release" alt="Release"></a>
