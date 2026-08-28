@@ -34,9 +34,10 @@
 - 一致性比单张惊艳更重要，系列素材统一风格词；seed 必记录，返工可复现
 - 模型产出的文字易乱码，生图阶段一律禁止；后期字幕/标题遵循「**不主动添加，用户要求才加**」（2026-08-25 修订）
 - 合规红线：不生成真实人物肖像冒充（尤其公众人物）、不生成受版权保护的 IP/商标角色、不生成违禁内容；商用前确认模型服务条款允许商用
+- **视觉目检唯一途径 = Agnes（2026-08-28 更新，mimo/opencode 已移除）**：`agnes-2.5-flash` 支持视觉输入（OpenAI content 数组带 `image_url`），用 Agnes 自己的 key/代理/端点即可看图目检，**无 mimo 免费档的 1 RPM 限流、不依赖任何 opencode 套餐**；响应结论在 `reasoning_content` 字段（`content` 常为空，取两者皆需看）；`max_tokens` 建议 ≥800（过小截断在推理段）。目检顺序：关键帧先目检再喂生视频，成片抽帧目检收尾。详细见 `references/media-creator/visual-inspection.md` 的「视觉目检首选」段
 - **性能（2026-08-26 优化）**：
   1. 提交前先读 `references/media-creator/api-quickstart.md` 的官方 schema——2.5-flash 曾因参数未知白耗约 60 分钟试错（ti2vid/keyframes 等 30+ 模式全 400），schema 已实测固化，**严禁再次参数试错**
-  2. 目检默认**并发**（`inspect_frames.sh` 的 `OC_CONCURRENCY`，Go 订阅 2-3 稳妥）且**先只抽 2-3 个关键时间点**（起/中/尾），命中问题帧再定点补测，不做全帧目检
+  2. 目检统一走 **Agnes 视觉**（`agnes-2.5-flash`，见 visual-inspection.md）且**先只抽 2-3 个关键时间点**（起/中/尾），命中问题帧再定点补测，不做全帧目检（原 mimo/opencode 链路已于 2026-08-28 随套餐到期移除，勿再调用 inspect_frames.sh）
   3. 多视频任务**并行提交**（payload 写独立 JSON 文件 `--data-binary @`），关键帧生图可并行；平台渲染时间不可压缩，用并行摊薄排队
   4. 一次性做对 > 反复试错：关键帧先目检确认再提交视频（失败重做成本分钟级），模型/schema 先查参考文档再动手
 
@@ -46,5 +47,5 @@
 以下深度内容按需读取，避免主文件臃肿：
 - `references/media-creator/api-quickstart.md` — Agnes API 调用速查 + curl 模板（实测）
 - `references/media-creator/seed-reproducibility.md` — seed 复现性实测结论
-- `references/media-creator/visual-inspection.md` — 多模态目检链路 + 交付前验收清单
+- `references/media-creator/visual-inspection.md` — 视觉目检（Agnes）+ 交付前验收清单
 - `references/media-creator/platform-guide.md` — 平台适配速查 + 10s 帧数分配
