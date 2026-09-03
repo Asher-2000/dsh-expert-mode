@@ -1,0 +1,22 @@
+{
+  "name": "@asherliner/dsh-expert-mode",
+  "description": "DSH 专家模式 agent preset — 首席协调官 + 17 位领域专家子代理（数据分析、文案、法务、产品、前端、UI/UX、架构、运营、增长、量化、财务、后端、DevOps、数据库、QA、安全、生图短视频）。按任务自动委派，专家间通过文件消息总线直接通信，任务板调度，质量门禁把关。",
+  "version": "0.9.2",
+  "entry": {
+    "name": "dsh-expert-mode",
+    "inject": []
+  },
+  "client": {
+    "platform": "any"
+  },
+  "preset": {
+    "targetDir": "~/.dsh/.agent-presets/expert-mode",
+    "files": [
+      "agent.cordis.yml",
+      "preset.yml"
+    ],
+    "bundles": [
+      ".expert-mode/"
+    ]
+  }
+}

@@ -12,7 +12,7 @@
     "subagent",
     "dsh-plugin"
   ],
-  "main": "index.js",
+  "main": "lib/index.js",
   "files": [
     "index.js",
     "cordis.patch.yml",
@@ -26,11 +26,21 @@
     ".expert-mode/reviews/",
     "README.md",
     "README.zh.md",
-    "LICENSE"
+    "LICENSE",
+    "lib/",
+    "dsh.plugin.json"
   ],
   "dsh": {
     "bundle": {
       "patch": "./cordis.patch.yml"
     }
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Asher-2000/dsh-expert-mode.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Asher-2000/dsh-expert-mode/issues"
+  },
+  "homepage": "https://github.com/Asher-2000/dsh-expert-mode#readme"
 }
