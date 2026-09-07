@@ -5,8 +5,8 @@
 当当前模型不支持读图（`read_image` 不可用）时，**用 Agnes 自己的多模态模型看图目检**——Agnes key 本就在用、免费无限流（曾对比的 mimo 免费路由常 `Rate limit exceeded`，且其 opencode 套餐已到期）。
 
 - **模型**：`agnes-2.5-flash`（免费档，实测支持视觉输入）；`agnes-2.5-pro` 更强但**需付费额度（实测 quota=0 时返回 `insufficient_user_quota`）**，默认用 flash
-- **端点**：`POST https://apihub.agnes-ai.com/v1/chat/completions`（或国内镜像 `.cn`），`Authorization: Bearer <agnes key>`（key 从 `/home/sam/.config/agnes-api-key` 读取，禁止回显）
-- **代理**：外部 API 走代理 `-x http://127.0.0.1:7898`
+- **端点**：`POST https://apihub.agnes-ai.com/v1/chat/completions`（或国内镜像 `.cn`），`Authorization: Bearer <agnes key>`（key 从 `<API_KEY_FILE>` 读取，禁止回显）
+- **代理**：外部 API 按需走代理（`HTTP_PROXY` / curl `-x <PROXY_ADDR>`）
 - **带图请求**：OpenAI content 数组——`{"model":"agnes-2.5-flash","messages":[{"role":"user","content":[{"type":"text","text":"<质检清单>"},{"type":"image_url","image_url":{"url":"data:image/png;base64,<b64>"}}]}],"max_tokens":800}`
 - **响应特征（关键，易踩坑）**：agnes-2.5-flash 是 reasoning 模型，结论在 **`choices[0].message.reasoning_content`** 字段，`message.content` 常为空字符串；判定时要**先取 content，为空再取 reasoning_content**。`finish_reason=length` 表示截断（max_tokens 过小），应调大重新补测
 - **图片大小**：关键帧 PNG 约 1.9MB base64 后 ~2.4MB，可直接发；超大图先压缩长边

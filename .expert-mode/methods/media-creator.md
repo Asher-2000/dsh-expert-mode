@@ -51,3 +51,4 @@
 - `references/media-creator/seed-reproducibility.md` — seed 复现性实测结论
 - `references/media-creator/visual-inspection.md` — 多模态目检链路 + 交付前验收清单
 - `references/media-creator/platform-guide.md` — 平台适配速查 + 10s 帧数分配
+- `references/media-creator/character-scene-composition.md` — **人设图+场景图→双图合成关键帧→生视频**全链路（用户提供角色图时的标准做法；含截图图源处理/像素定位裁剪/多图合成 schema/三方对比目检；2026-09-06 首次实操打通）

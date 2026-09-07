@@ -26,28 +26,28 @@
 
 ```bash
 # 发单播（专家A → 专家B）
-python3 /home/sam/deepcode/.expert-mode/comm/bus.py send data-analyst copywriter "分析结果" "发现3个关键数据点"
+python3 .expert-mode/comm/bus.py send data-analyst copywriter "分析结果" "发现3个关键数据点"
 
 # 从文件读取正文发消息
-python3 /home/sam/deepcode/.expert-mode/comm/bus.py send architect frontend-dev "架构决策" - < /tmp/decision.txt
+python3 .expert-mode/comm/bus.py send architect frontend-dev "架构决策" - < /tmp/decision.txt
 
 # 读收件箱
-python3 /home/sam/deepcode/.expert-mode/comm/bus.py read copywriter
+python3 .expert-mode/comm/bus.py read copywriter
 
 # 确认已读（归档）
-python3 /home/sam/deepcode/.expert-mode/comm/bus.py ack copywriter <message_id>
+python3 .expert-mode/comm/bus.py ack copywriter <message_id>
 
 # 广播（除自己外所有邮箱）
-python3 /home/sam/deepcode/.expert-mode/comm/bus.py broadcast coordinator "状态同步" "全体专家进度正常"
+python3 .expert-mode/comm/bus.py broadcast coordinator "状态同步" "全体专家进度正常"
 
 # 总线概况
-python3 /home/sam/deepcode/.expert-mode/comm/bus.py stats
-python3 /home/sam/deepcode/.expert-mode/comm/bus.py inboxes
+python3 .expert-mode/comm/bus.py stats
+python3 .expert-mode/comm/bus.py inboxes
 ```
 
 **简便别名**（专家提示词里可注入）：
 ```bash
-alias bus="python3 /home/sam/deepcode/.expert-mode/comm/bus.py"
+alias bus="python3 .expert-mode/comm/bus.py"
 ```
 
 ---
